@@ -30,8 +30,7 @@ Follow these steps:
 - If the tests are failing, fix them
 - Ensure that all tests are passing before moving on to the next step
 
-
 # DEPLOY
 
 - Open a PR and request a review.
-Remember to use the GitHub CLI (gh') for all Github-related
+Remember to use the GitHub CLI ('gh') for all Github-related tasks.
