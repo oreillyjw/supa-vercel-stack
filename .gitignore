@@ -1,6 +1,3 @@
-# We don't want lockfiles in stacks, as people could use a different package manager
-# This part will be removed by `remix.init`
-yarn.lock
 pnpm-lock.yaml
 pnpm-lock.yml
 
@@ -39,3 +36,4 @@ pre-log.json
 .vercel
 .playwright-mcp/
 .scratchpads
+**/*.tsbuildinfo
