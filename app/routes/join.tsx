@@ -11,13 +11,10 @@ import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { i18nextServer } from "~/integrations/i18n";
-import {
-	createAuthSession,
-	getAuthSession,
-	ContinueWithEmailForm,
-} from "~/modules/auth";
-import { getUserByEmail, createUserAccount } from "~/modules/user";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
+import { ContinueWithEmailForm } from "~/modules/auth";
+import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
+import { getUserByEmail, createUserAccount } from "~/modules/user/service.server";
 import { assertIsPost, isFormProcessing } from "~/utils";
 
 export async function loader({ request }: LoaderFunctionArgs) {

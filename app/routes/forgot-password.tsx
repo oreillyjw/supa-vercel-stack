@@ -7,7 +7,7 @@ import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
 import { i18nextServer } from "~/integrations/i18n";
-import { getAuthSession, sendResetPasswordLink } from "~/modules/auth";
+import { getAuthSession, sendResetPasswordLink } from "~/modules/auth/service.server";
 import { assertIsPost, isFormProcessing, tw } from "~/utils";
 
 export async function loader({ request }: LoaderFunctionArgs) {

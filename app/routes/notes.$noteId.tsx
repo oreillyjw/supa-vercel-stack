@@ -2,8 +2,8 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect, json } from "@remix-run/node";
 import { Form, useLoaderData, useRouteError } from "@remix-run/react";
 
-import { requireAuthSession, commitAuthSession } from "~/modules/auth";
-import { deleteNote, getNote } from "~/modules/note";
+import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
+import { deleteNote, getNote } from "~/modules/note/service.server";
 import { assertIsDelete, getRequiredParam } from "~/utils";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {

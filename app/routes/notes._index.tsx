@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
-import { requireAuthSession } from "~/modules/auth";
+import { requireAuthSession } from "~/modules/auth/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	await requireAuthSession(request);

@@ -11,8 +11,8 @@ import {
 	refreshAccessToken,
 	commitAuthSession,
 	getAuthSession,
-} from "~/modules/auth";
-import { tryCreateUser, getUserByEmail } from "~/modules/user";
+} from "~/modules/auth/service.server";
+import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";
 import { assertIsPost, safeRedirect } from "~/utils";
 
 // imagine a user go back after OAuth login success or type this URL

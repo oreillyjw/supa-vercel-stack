@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 
-import { destroyAuthSession } from "~/modules/auth";
+import { destroyAuthSession } from "~/modules/auth/session.server";
 import { assertIsPost } from "~/utils";
 
 export async function action({ request }: ActionFunctionArgs) {

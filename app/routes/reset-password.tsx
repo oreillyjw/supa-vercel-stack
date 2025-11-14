@@ -14,7 +14,7 @@ import {
 	getAuthSession,
 	refreshAccessToken,
 	updateAccountPassword,
-} from "~/modules/auth";
+} from "~/modules/auth/service.server";
 import { assertIsPost, isFormProcessing, tw } from "~/utils";
 
 export async function loader({ request }: LoaderFunctionArgs) {
