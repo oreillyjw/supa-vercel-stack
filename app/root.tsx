@@ -16,7 +16,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 
-import { i18nextServer } from "~/integrations/i18n/config";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getBrowserEnv } from "./utils/env";
