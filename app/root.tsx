@@ -16,9 +16,9 @@ import {
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
 
-import { i18nextServer } from "~/integrations/i18n";
+import { i18nextServer } from "~/integrations/i18n/config";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getBrowserEnv } from "./utils/env";
 
 export const links: LinksFunction = () => [
