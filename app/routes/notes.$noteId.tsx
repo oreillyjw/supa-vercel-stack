@@ -19,10 +19,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
-	assertIsDelete(request);
 	const id = getRequiredParam(params, "noteId");
 	const authSession = await requireAuthSession(request);
 
+	// Remix forms with method="delete" are handled as actions
 	await deleteNote({ userId: authSession.userId, id });
 
 	return redirect("/notes", {
