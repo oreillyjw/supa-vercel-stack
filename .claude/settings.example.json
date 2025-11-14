@@ -1,0 +1,59 @@
+{
+	"permissions": {
+		"allow": ["Bash(npm install)"],
+		"deny": [
+			"Read(./.env)",
+			"Read(./.env.*)",
+			"Read(./secrets/**)",
+			"Read(./config/credentials.json)",
+			"Read(./build)"
+		],
+		"ask": []
+	},
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Read|Grep",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node $PWD/hooks/read_hook.js"
+					}
+				]
+			},
+			{
+				"matcher": "*",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "jq . > .claude/logs/pre-log.json"
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Write|Edit|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "jq -r '.tool_response.filePath // .tool_input.file_path // empty' | xargs -I {} npx --yes prettier --write {} 2>/dev/null || true"
+					},
+					{
+						"type": "command",
+						"command": "node $PWD/hooks/tsc.js"
+					}
+				]
+			},
+			{
+				"matcher": "*",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "jq . > .claude/logs/post-log.json"
+					}
+				]
+			}
+		]
+	}
+}
