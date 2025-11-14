@@ -5,6 +5,7 @@ import { Form, useLoaderData, useRouteError } from "@remix-run/react";
 import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
 import { deleteNote, getNote } from "~/modules/note/service.server";
 import { assertIsDelete, getRequiredParam } from "~/utils";
+import { assertIsPost } from "~/utils/http.server";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
 	const { userId } = await requireAuthSession(request);

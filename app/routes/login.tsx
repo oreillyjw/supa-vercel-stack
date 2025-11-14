@@ -15,7 +15,8 @@ import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { ContinueWithEmailForm } from "~/modules/auth";
 import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { signInWithEmail } from "~/modules/auth/service.server";
-import { assertIsPost, isFormProcessing } from "~/utils";
+import { isFormProcessing } from "~/utils";
+import { assertIsPost } from "~/utils/http.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);

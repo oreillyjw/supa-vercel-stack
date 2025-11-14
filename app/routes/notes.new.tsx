@@ -8,7 +8,8 @@ import { z } from "zod";
 
 import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
 import { createNote } from "~/modules/note/service.server";
-import { assertIsPost, isFormProcessing } from "~/utils";
+import { isFormProcessing } from "~/utils";
+import { assertIsPost } from "~/utils/http.server";
 
 export const NewNoteFormSchema = z.object({
 	title: z.string().min(1, "require-title"),
