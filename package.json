@@ -3,17 +3,16 @@
 	"private": true,
 	"sideEffects": false,
 	"scripts": {
-		"build": "run-s build:*",
-		"build:remix": "remix build",
+		"build": "vite build",
 		"db:prepare-migration": "prisma migrate dev --create-only --skip-seed",
 		"db:deploy-migration": "prisma migrate deploy",
-		"dev": "remix dev",
+		"dev": "vite dev",
 		"format": "prettier --write .",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
 		"setup": " npm install && node ./scripts/init-claude.js && run-s db:reset",
 		"setup:seed": "prisma db seed",
-		"start": "remix-serve build",
-		"start:ci": "dotenv -- remix-serve build",
+		"start": "vite preview",
+		"start:ci": "dotenv -- vite preview",
 		"test": "vitest",
 		"test:cov": "vitest --coverage",
 		"test:e2e:dev": "start-server-and-test dev http://localhost:3000 'npx cypress open'",
@@ -29,9 +28,8 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.7.1",
-		"@remix-run/node": "*",
-		"@remix-run/react": "*",
-		"@remix-run/serve": "*",
+		"@remix-run/node": "2.16.7",
+		"@remix-run/react": "2.16.7",
 		"@supabase/supabase-js": "^2.39.1",
 		"autoprefixer": "^10.4.16",
 		"cookie": "^0.6.0",
@@ -51,8 +49,8 @@
 	"devDependencies": {
 		"@anthropic-ai/claude-code": "^2.0.37",
 		"@faker-js/faker": "^8.3.1",
-		"@remix-run/dev": "*",
-		"@remix-run/eslint-config": "*",
+		"@remix-run/dev": "2.16.7",
+		"@remix-run/eslint-config": "2.16.7",
 		"@tailwindcss/forms": "^0.5.7",
 		"@tailwindcss/typography": "^0.5.10",
 		"@testing-library/cypress": "^10.0.1",
@@ -62,6 +60,7 @@
 		"@types/i18next-fs-backend": "^1.1.5",
 		"@types/react": "^18.2.45",
 		"@types/react-dom": "^18.2.18",
+		"@vercel/remix": "2.16.7",
 		"@vitejs/plugin-react": "^4.2.1",
 		"@vitest/coverage-v8": "^1.1.0",
 		"cross-env": "^7.0.3",
@@ -81,8 +80,8 @@
 		"tsconfig-paths": "^4.2.0",
 		"tsx": "^4.7.0",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.10",
-		"vite-tsconfig-paths": "^4.2.2",
+		"vite": "^6.4.1",
+		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^1.1.0"
 	},
 	"overrides": {
@@ -91,7 +90,7 @@
 		}
 	},
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"prisma": {
 		"schema": "app/database/schema.prisma",
