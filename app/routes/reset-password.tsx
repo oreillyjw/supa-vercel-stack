@@ -7,14 +7,16 @@ import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { i18nextServer } from "~/integrations/i18n";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { supabaseClient } from "~/integrations/supabase";
 import {
-	commitAuthSession,
-	getAuthSession,
 	refreshAccessToken,
 	updateAccountPassword,
 } from "~/modules/auth/service.server";
+import {
+	commitAuthSession,
+	getAuthSession,
+} from "~/modules/auth/session.server";
 import { isFormProcessing, tw } from "~/utils";
 import { assertIsPost } from "~/utils/http.server";
 
