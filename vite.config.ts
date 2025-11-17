@@ -17,4 +17,10 @@ export default defineConfig({
 			ignored: ["!**/tailwind.config.ts"],
 		},
 	},
+	ssr: {
+		noExternal: ["remix-i18next"],
+	},
+	optimizeDeps: {
+		exclude: ["i18next-fs-backend"],
+	},
 });
