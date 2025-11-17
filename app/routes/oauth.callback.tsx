@@ -10,8 +10,7 @@ import { supabaseClient } from "~/integrations/supabase";
 import { refreshAccessToken } from "~/modules/auth/service.server";
 import { commitAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";
-import { safeRedirect } from "~/utils/http.server";
-import { assertIsPost } from "~/utils/http.server";
+import { safeRedirect , assertIsPost } from "~/utils/http.server";
 
 // imagine a user go back after OAuth login success or type this URL
 // we don't want him to fall in a black hole 👽

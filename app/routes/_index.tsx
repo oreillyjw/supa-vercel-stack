@@ -21,7 +21,7 @@ export default function Index() {
 					<div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
 						<div className="absolute inset-0">
 							<img
-								className="h-full w-full object-cover"
+								className="size-full object-cover"
 								src="https://user-images.githubusercontent.com/1500684/157774694-99820c51-8165-4908-a031-34fc371ac0d6.jpg"
 								alt="Sonic Youth On Stage"
 							/>
@@ -80,7 +80,7 @@ export default function Index() {
 								<img
 									src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
 									alt="Remix"
-									className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
+									className="mx-auto mt-16 w-full max-w-48 md:max-w-64"
 								/>
 							</a>
 						</div>
