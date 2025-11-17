@@ -176,20 +176,29 @@ After running `npm run db:seed`, test account is available:
 **Vitest** (unit tests):
 
 -   Config: `vitest.config.ts`
--   Setup file: `test/setup-test-env.ts`
+-   Setup file: `test/unit/setup-test-env.ts`
 -   Environment: happy-dom
 -   Coverage reports in HTML, JSON, and text
 
 **Playwright** (E2E tests):
 
--   Test files: `tests/e2e/*.spec.ts`
+-   Test files: `test/e2e/*.spec.ts`
 -   Config: `playwright.config.ts`
+-   TypeScript config: `test/tsconfig.json`
 -   Uses `page.getByTestId()`, `page.getByRole()`, etc. for element selection
--   Custom fixtures in `tests/support/fixtures.ts` for user management
--   Test utilities: `tests/support/create-user.ts` and `tests/support/delete-user.ts`
+-   Custom fixtures in `test/support/fixtures.ts` for user management
+-   Test utilities: `test/support/create-user.ts` and `test/support/delete-user.ts`
 -   Uses `data-test-id` attribute (configured in playwright.config.ts)
 -   Requires `.env` to be configured
 -   Run dev server concurrently during development testing
+
+**Test Directory Structure**:
+```
+test/
+├── unit/           # Vitest unit test setup
+├── e2e/            # Playwright E2E tests
+└── support/        # Shared test utilities and fixtures
+```
 
 ### CSS/Styling
 

@@ -15,7 +15,7 @@ const port = process.env.PORT ?? (isDev ? "3000" : "8811");
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-	testDir: "./tests/e2e",
+	testDir: "./test/e2e",
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
