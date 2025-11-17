@@ -27,7 +27,6 @@
 		"db:seed": "dotenv -- tsx app/database/seed.server.ts"
 	},
 	"dependencies": {
-		"@playwright/test": "^1.56.1",
 		"@prisma/client": "^5.7.1",
 		"@remix-run/node": "2.16.7",
 		"@remix-run/react": "2.16.7",
@@ -50,6 +49,7 @@
 	"devDependencies": {
 		"@anthropic-ai/claude-code": "^2.0.37",
 		"@faker-js/faker": "^8.3.1",
+		"@playwright/test": "^1.56.1",
 		"@remix-run/dev": "2.16.7",
 		"@remix-run/eslint-config": "2.16.7",
 		"@tailwindcss/forms": "^0.5.7",
