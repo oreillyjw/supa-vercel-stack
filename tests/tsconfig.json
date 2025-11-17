@@ -1,0 +1,23 @@
+{
+	"exclude": ["../node_modules/@types/jest"],
+	"include": [
+		"e2e/**/*",
+		"support/**/*",
+		"../node_modules/@playwright/test"
+	],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"noEmit": true,
+		"esModuleInterop": true,
+		"jsx": "react-jsx",
+		"moduleResolution": "node",
+		"target": "es2019",
+		"strict": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"typeRoots": ["../types", "../node_modules/@types"],
+		"paths": {
+			"~/*": ["../app/*"]
+		}
+	}
+}
