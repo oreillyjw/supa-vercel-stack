@@ -17,10 +17,6 @@ export default defineConfig({
 			ignored: ["!**/tailwind.config.ts"],
 		},
 	},
-	preview: {
-		port: process.env.PORT ? parseInt(process.env.PORT, 10) : 4173,
-		strictPort: true, // Fail if port is in use instead of trying another port
-	},
 	ssr: {
 		noExternal: ["remix-i18next"],
 	},
