@@ -79,8 +79,8 @@ jobs:
             - name: ⚡ Run vitest
               run: npm run test -- --coverage
 
-    cypress:
-        name: ⚫️ Cypress
+    playwright:
+        name: 🎭 Playwright
         runs-on: ubuntu-latest
         steps:
             - name: 🛑 Cancel Previous Runs
@@ -110,19 +110,14 @@ jobs:
               with:
                   useLockFile: false
 
+            - name: 🎭 Install Playwright Browsers
+              run: npx playwright install --with-deps chromium
+
             # uncomment if you really want to reset your testing database
             # - name: 🛠 Setup Database
             #   run: npx prisma migrate reset --force
 
-            - name: ⚙️ Build
-              run: npm run build
-
-            - name: 🌳 Cypress run
-              uses: cypress-io/github-action@v4
-              with:
-                  start: npm run start:ci
-                  wait-on: "http://localhost:8811"
-                  browser: chrome
-                  headed: true
+            - name: 🎭 Playwright run
+              run: npm run test:e2e:run
               env:
-                  PORT: "8811"
+                  CI: true

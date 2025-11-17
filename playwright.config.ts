@@ -8,8 +8,8 @@ import { defineConfig, devices } from "@playwright/test";
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const isDev = process.env.NODE_ENV !== "production";
-const port = process.env.PORT ?? (isDev ? "3000" : "8811");
+// Use port 3000 for interactive dev mode, 8811 for E2E test runs
+const port = process.env.PORT ?? "3000";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
