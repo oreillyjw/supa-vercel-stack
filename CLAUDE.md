@@ -48,8 +48,8 @@ npm run db:deploy-migration    # Apply migrations to database
 ```bash
 npm test                       # Run Vitest unit tests in watch mode
 npm run test:cov               # Run tests with coverage report
-npm run test:e2e:dev           # Open Cypress for interactive E2E testing
-npm run test:e2e:run           # Run Cypress tests headlessly (runs build first)
+npm run test:e2e:dev           # Open Playwright UI for interactive E2E testing
+npm run test:e2e:run           # Run Playwright tests headlessly (runs build first)
 npm run validate               # Run all checks: tests, lint, typecheck, e2e
 ```
 
@@ -180,11 +180,14 @@ After running `npm run db:seed`, test account is available:
 -   Environment: happy-dom
 -   Coverage reports in HTML, JSON, and text
 
-**Cypress** (E2E tests):
+**Playwright** (E2E tests):
 
--   Test files: `cypress/e2e/*.cy.ts`
--   Uses `@testing-library/cypress` for semantic element selection
--   Clean up test users with `cy.cleanupUser()` in `afterEach` blocks
+-   Test files: `tests/e2e/*.spec.ts`
+-   Config: `playwright.config.ts`
+-   Uses `page.getByTestId()`, `page.getByRole()`, etc. for element selection
+-   Custom fixtures in `tests/support/fixtures.ts` for user management
+-   Test utilities: `tests/support/create-user.ts` and `tests/support/delete-user.ts`
+-   Uses `data-test-id` attribute (configured in playwright.config.ts)
 -   Requires `.env` to be configured
 -   Run dev server concurrently during development testing
 
