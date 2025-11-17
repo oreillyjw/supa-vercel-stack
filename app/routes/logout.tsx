@@ -3,7 +3,6 @@ import { redirect } from "@remix-run/node";
 
 import { destroyAuthSession } from "~/modules/auth/session.server";
 import { assertIsPost } from "~/utils/http.server";
-import { assertIsPost } from "~/utils/http.server";
 
 export async function action({ request }: ActionFunctionArgs) {
 	assertIsPost(request);

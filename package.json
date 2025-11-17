@@ -27,6 +27,7 @@
 		"db:seed": "dotenv -- tsx app/database/seed.server.ts"
 	},
 	"dependencies": {
+		"@playwright/test": "^1.56.1",
 		"@prisma/client": "^5.7.1",
 		"@remix-run/node": "2.16.7",
 		"@remix-run/react": "2.16.7",
@@ -90,7 +91,7 @@
 		}
 	},
 	"engines": {
-		"node": "22.x"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"prisma": {
 		"schema": "app/database/schema.prisma",
