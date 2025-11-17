@@ -8,7 +8,7 @@ import { installGlobals } from "@remix-run/node";
 
 import { db } from "~/database";
 import { deleteAuthAccount } from "~/modules/auth/service.server";
-import { getUserByEmail } from "~/modules/user";
+import { getUserByEmail } from "~/modules/user/service.server";
 
 installGlobals();
 
