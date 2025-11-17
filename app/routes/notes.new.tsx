@@ -6,9 +6,10 @@ import { Form, useNavigation } from "@remix-run/react";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { requireAuthSession, commitAuthSession } from "~/modules/auth";
-import { createNote } from "~/modules/note";
-import { assertIsPost, isFormProcessing } from "~/utils";
+import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
+import { createNote } from "~/modules/note/service.server";
+import { isFormProcessing } from "~/utils";
+import { assertIsPost } from "~/utils/http.server";
 
 export const NewNoteFormSchema = z.object({
 	title: z.string().min(1, "require-title"),

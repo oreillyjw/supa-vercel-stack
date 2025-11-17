@@ -14,8 +14,9 @@ import {
 	getAuthSession,
 	refreshAccessToken,
 	updateAccountPassword,
-} from "~/modules/auth";
-import { assertIsPost, isFormProcessing, tw } from "~/utils";
+} from "~/modules/auth/service.server";
+import { isFormProcessing, tw } from "~/utils";
+import { assertIsPost } from "~/utils/http.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);

@@ -9,7 +9,7 @@ import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { I18nextProvider } from "react-i18next";
 
-import { createI18nextServerInstance } from "./integrations/i18n";
+import { createI18nextServerInstance } from "./integrations/i18n/i18next.server";
 
 const ABORT_DELAY = 5000;
 

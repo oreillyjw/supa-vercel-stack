@@ -6,7 +6,6 @@ import type {
 import { json } from "@remix-run/node";
 import {
 	Links,
-	LiveReload,
 	Meta,
 	Outlet,
 	Scripts,
@@ -14,11 +13,11 @@ import {
 	useLoaderData,
 } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import { useChangeLanguage } from "remix-i18next";
+import { useChangeLanguage } from "remix-i18next/react";
 
-import { i18nextServer } from "~/integrations/i18n";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getBrowserEnv } from "./utils/env";
 
 export const links: LinksFunction = () => [
@@ -64,7 +63,6 @@ export default function App() {
 					}}
 				/>
 				<Scripts />
-				<LiveReload />
 			</body>
 		</html>
 	);

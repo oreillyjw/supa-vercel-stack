@@ -7,7 +7,7 @@
 import { installGlobals } from "@remix-run/node";
 
 import { db } from "~/database";
-import { createEmailAuthAccount } from "~/modules/auth";
+import { createEmailAuthAccount } from "~/modules/auth/service.server";
 
 installGlobals();
 

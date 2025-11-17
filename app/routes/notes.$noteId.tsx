@@ -2,9 +2,9 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect, json } from "@remix-run/node";
 import { Form, useLoaderData, useRouteError } from "@remix-run/react";
 
-import { requireAuthSession, commitAuthSession } from "~/modules/auth";
-import { deleteNote, getNote } from "~/modules/note";
-import { assertIsDelete, getRequiredParam } from "~/utils";
+import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
+import { deleteNote, getNote } from "~/modules/note/service.server";
+import { assertIsDelete, getRequiredParam } from "~/utils/http.server";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
 	const { userId } = await requireAuthSession(request);
@@ -20,6 +20,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
 	assertIsDelete(request);
+
 	const id = getRequiredParam(params, "noteId");
 	const authSession = await requireAuthSession(request);
 

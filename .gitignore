@@ -36,4 +36,5 @@ pre-log.json
 .vercel
 .playwright-mcp/
 .scratchpads
+.scratchpad
 **/*.tsbuildinfo

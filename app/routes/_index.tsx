@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 
-import { getAuthSession } from "~/modules/auth";
+import { getAuthSession } from "~/modules/auth/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const { email } = (await getAuthSession(request)) || {};

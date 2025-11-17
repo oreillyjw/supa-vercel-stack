@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
-import { sendMagicLink } from "~/modules/auth";
+import { sendMagicLink } from "~/modules/auth/service.server";
 import { assertIsPost } from "~/utils/http.server";
 
 export async function action({ request }: ActionFunctionArgs) {

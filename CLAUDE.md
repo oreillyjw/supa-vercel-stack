@@ -6,6 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Remix full-stack application using Supabase for authentication and database, Prisma as the ORM, and Tailwind CSS for styling. The application is a note-taking app that demonstrates authentication flows (email/password and magic links) and CRUD operations.
 
+## Working with Claude Code
+
+### Scratchpads
+
+When working on complex tasks or planning, **always use the `.scratchpads/` directory** for temporary notes, planning documents, and work-in-progress files. This directory is gitignored and provides a clean space for:
+
+-   Migration plans and strategies
+-   Implementation notes and TODOs
+-   Research and exploration findings
+-   Draft documentation before finalizing
+
+Create files in `.scratchpads/` with descriptive names like `.scratchpads/issue-11-playwright-migration.md`.
+
 ## Essential Commands
 
 ### Development
