@@ -18,24 +18,31 @@ export async function createAccount(email: string, password: string) {
 		throw new Error("All test emails must end in @example.com");
 	}
 
-	const authAccount = await createEmailAuthAccount(email, password);
+	try {
+		const authAccount = await createEmailAuthAccount(email, password);
 
-	if (!authAccount) {
-		throw new Error("Failed to create user account for tests");
+		if (!authAccount) {
+			throw new Error("createEmailAuthAccount returned null/undefined");
+		}
+
+		const newUser = await db.user.create({
+			data: {
+				email: email.toLowerCase(),
+				id: authAccount.id,
+			},
+		});
+
+		if (!newUser) {
+			throw new Error("Prisma user.create returned null/undefined");
+		}
+
+		return { email, password };
+	} catch (error) {
+		const errorMessage = error instanceof Error ? error.message : String(error);
+		throw new Error(
+			`Failed to create test user account for ${email}: ${errorMessage}`,
+		);
 	}
-
-	const newUser = await db.user.create({
-		data: {
-			email: email.toLowerCase(),
-			id: authAccount.id,
-		},
-	});
-
-	if (!newUser) {
-		throw new Error("Failed to create user database entry");
-	}
-
-	return { email, password };
 }
 
 // Allow script execution
