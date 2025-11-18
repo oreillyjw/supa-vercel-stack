@@ -29,10 +29,11 @@ test.describe("smoke tests", () => {
 		// Logout
 		await page.getByTestId("logout").click();
 
-		// Verify we're back on login page
+		// Wait for logout to complete before cleanup
 		await expect(page.getByTestId("login")).toBeVisible();
+		await expect(page).toHaveURL("/");
 
-		// Cleanup - delete the test user
+		// Cleanup - delete the test user after logout completes
 		await deleteUser(loginForm.email);
 	});
 
@@ -77,9 +78,12 @@ test.describe("smoke tests", () => {
 
 		// Logout
 		await page.getByTestId("logout").click();
-		await expect(page.getByTestId("login")).toBeVisible();
 
-		// Cleanup - delete the test user
+		// Wait for logout to complete before cleanup
+		await expect(page.getByTestId("login")).toBeVisible();
+		await expect(page).toHaveURL("/");
+
+		// Cleanup - delete the test user after logout completes
 		await deleteUser(credentials.email);
 	});
 });
