@@ -3,7 +3,6 @@ import type {
 	LoaderFunction,
 	MetaFunction,
 } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import {
 	Links,
 	Meta,
@@ -31,10 +30,10 @@ export const meta: MetaFunction = () => [
 
 export const loader: LoaderFunction = async ({ request }) => {
 	const locale = await i18nextServer.getLocale(request);
-	return json({
+	return {
 		locale,
 		env: getBrowserEnv(),
-	});
+	};
 };
 
 export default function App() {

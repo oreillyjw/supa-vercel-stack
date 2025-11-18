@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { useActionData, useFetcher, useSearchParams } from "@remix-run/react";
 import { parseFormAny } from "react-zorm";
@@ -16,10 +16,10 @@ import { safeRedirect , assertIsPost } from "~/utils/http.server";
 // we don't want him to fall in a black hole 👽
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);
-
+	console.log("loader authSession:", authSession);
 	if (authSession) return redirect("/notes");
 
-	return json({});
+	return {};
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -34,7 +34,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				message: "invalid-request",
 			},

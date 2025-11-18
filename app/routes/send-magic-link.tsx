@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { data } from "@remix-run/node";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
@@ -20,7 +20,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				error: "invalid-email",
 			},
@@ -32,7 +32,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 	if (error) {
 		console.error(error);
-		return json(
+		return data(
 			{
 				error: "unable-to-send-magic-link",
 			},
@@ -40,5 +40,5 @@ export async function action({ request }: ActionFunctionArgs) {
 		);
 	}
 
-	return json({ error: null });
+	return { error: null };
 }

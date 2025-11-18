@@ -5,7 +5,7 @@ import type {
 	LoaderFunctionArgs,
 	MetaFunction,
 } from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
+import { redirect, data } from "@remix-run/node";
 import { Form, Link, useNavigation, useSearchParams } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
@@ -25,7 +25,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({ title });
+	return { title };
 }
 
 const JoinFormSchema = z.object({
@@ -43,7 +43,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const result = await JoinFormSchema.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				errors: result.error,
 			},
@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const existingUser = await getUserByEmail(email);
 
 	if (existingUser) {
-		return json(
+		return data(
 			{ errors: { email: "user-already-exist", password: null } },
 			{ status: 400 },
 		);
@@ -65,7 +65,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await createUserAccount(email, password);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{ errors: { email: "unable-to-create-account", password: null } },
 			{ status: 500 },
 		);

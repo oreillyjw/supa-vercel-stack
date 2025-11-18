@@ -1,5 +1,4 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { useLoaderData, Outlet, Link, NavLink } from "@remix-run/react";
 
 import { LogoutButton } from "~/modules/auth";
@@ -16,7 +15,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		throw notFound(`No user with id ${userId}`);
 	}
 
-	return json({ email, notes });
+	return { email, notes };
 }
 
 export default function NotesPage() {
