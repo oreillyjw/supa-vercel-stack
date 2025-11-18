@@ -24,7 +24,7 @@ jobs:
             - name: ⎔ Setup node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 22
 
             - name: 📥 Download deps
               uses: bahmutov/npm-install@v1
@@ -47,7 +47,7 @@ jobs:
             - name: ⎔ Setup node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 22
 
             - name: 📥 Download deps
               uses: bahmutov/npm-install@v1
@@ -70,7 +70,7 @@ jobs:
             - name: ⎔ Setup node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 22
 
             - name: 📥 Download deps
               uses: bahmutov/npm-install@v1
@@ -93,23 +93,75 @@ jobs:
             - name: 🔑 Make envfile
               uses: SpicyPizza/create-envfile@v1.3
               with:
-                  envkey_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-                  envkey_SUPABASE_ANON_PUBLIC: ${{ secrets.SUPABASE_ANON_PUBLIC }}
-                  envkey_SUPABASE_SERVICE_ROLE: ${{ secrets.SUPABASE_SERVICE_ROLE }}
-                  envkey_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-                  envkey_SERVER_URL: ${{ secrets.SERVER_URL }}
-                  envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                  envkey_SESSION_SECRET: ${{ secrets.CI_SESSION_SECRET }}
+                  envkey_SUPABASE_ANON_PUBLIC: ${{ secrets.CI_SUPABASE_ANON_PUBLIC }}
+                  envkey_SUPABASE_SERVICE_ROLE: ${{ secrets.CI_SUPABASE_SERVICE_ROLE }}
+                  envkey_SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
+                  envkey_SERVER_URL: ${{ secrets.CI_SERVER_URL }}
+                  envkey_DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
                   file_name: .env
 
             - name: ⎔ Setup node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 22
 
             - name: 📥 Download deps
               uses: bahmutov/npm-install@v1
               with:
                   useLockFile: false
+
+            - name: ⚙️ Build
+              run: npm run build
+
+            - name: Setup Local Supabase
+              uses: supabase/setup-cli@v1
+              with:
+                  version: latest
+            - name: Setup Serverless Supabase
+              uses: denoland/setup-deno@v2
+              with:
+                  deno-version: latest
+            - name: Start Supabase
+              run: supabase start
+
+            - name: Wait for Supabase to be ready
+              run: |
+                  echo "Waiting for Supabase to be ready..."
+                  timeout 60 bash -c 'until curl -f http://localhost:54321/auth/v1/health; do echo "Waiting for Supabase health check..."; sleep 2; done'
+                  echo "Supabase is ready!"
+
+            - name: Seed Supabase Database
+              run: |
+                  echo "Seeding database..."
+                  npm run db:reset
+                  echo "Database seeded successfully!"
+
+            - name: Verify Database State
+              run: |
+                  echo "Checking database state..."
+                  npx tsx -e "
+                  import { getSupabaseAdmin } from './app/integrations/supabase/client';
+                  (async () => {
+                    const supabase = getSupabaseAdmin();
+                    const { data, error, count } = await supabase.from('user').select('*', { count: 'exact', head: true });
+                    console.log('User count:', count);
+                    if (error) console.error('Database error:', error);
+                    if (count === 0) {
+                      console.error('No users found in database!');
+                      process.exit(1);
+                    }
+                    console.log('Database verification passed!');
+                  })();
+                  "
+              env:
+                  SESSION_SECRET: ${{ secrets.CI_SESSION_SECRET }}
+                  SUPABASE_ANON_PUBLIC: ${{ secrets.CI_SUPABASE_ANON_PUBLIC }}
+                  SUPABASE_SERVICE_ROLE: ${{ secrets.CI_SUPABASE_SERVICE_ROLE }}
+                  SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
+                  SERVER_URL: ${{ secrets.CI_SERVER_URL }}
+                  DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
+
 
             - name: 🎭 Install Playwright Browsers
               run: npx playwright install --with-deps chromium
