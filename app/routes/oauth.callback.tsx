@@ -50,7 +50,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await refreshAccessToken(refreshToken);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{
 				message: "invalid-refresh-token",
 			},
@@ -73,7 +73,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const user = await tryCreateUser(authSession);
 
 	if (!user) {
-		return json(
+		return data(
 			{
 				message: "create-user-error",
 			},

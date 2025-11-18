@@ -22,7 +22,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (!result.success) {
 		return data(
 			{
-				error: "invalid-email",
+				error: "invalid-email" as const,
 			},
 			{ status: 400 },
 		);
@@ -34,11 +34,11 @@ export async function action({ request }: ActionFunctionArgs) {
 		console.error(error);
 		return data(
 			{
-				error: "unable-to-send-magic-link",
+				error: "unable-to-send-magic-link" as const,
 			},
 			{ status: 500 },
 		);
 	}
 
-	return { error: null };
+	return data({ error: null });
 }
