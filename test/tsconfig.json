@@ -1,13 +1,9 @@
 {
-	"exclude": [
-		"../node_modules/@types/jest",
-		"../node_modules/@testing-library/jest-dom"
-	],
+	"exclude": ["../node_modules/@types/jest"],
 	"include": [
 		"e2e/**/*",
 		"support/**/*",
-		"../node_modules/cypress",
-		"../node_modules/@testing-library/cypress"
+		"../node_modules/@playwright/test"
 	],
 	"compilerOptions": {
 		"baseUrl": ".",

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { useActionData, useFetcher, useSearchParams } from "@remix-run/react";
 import { parseFormAny } from "react-zorm";
@@ -10,17 +10,16 @@ import { supabaseClient } from "~/integrations/supabase";
 import { refreshAccessToken } from "~/modules/auth/service.server";
 import { commitAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";
-import { safeRedirect } from "~/utils/http.server";
-import { assertIsPost } from "~/utils/http.server";
+import { safeRedirect , assertIsPost } from "~/utils/http.server";
 
 // imagine a user go back after OAuth login success or type this URL
 // we don't want him to fall in a black hole 👽
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);
-
+	console.log("loader authSession:", authSession);
 	if (authSession) return redirect("/notes");
 
-	return json({});
+	return {};
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -35,7 +34,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				message: "invalid-request",
 			},
@@ -51,7 +50,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await refreshAccessToken(refreshToken);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{
 				message: "invalid-refresh-token",
 			},
@@ -74,7 +73,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const user = await tryCreateUser(authSession);
 
 	if (!user) {
-		return json(
+		return data(
 			{
 				message: "create-user-error",
 			},

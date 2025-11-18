@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { i18nextServer } from "~/integrations/i18n";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { supabaseClient } from "~/integrations/supabase";
 import {
-	commitAuthSession,
-	getAuthSession,
 	refreshAccessToken,
 	updateAccountPassword,
 } from "~/modules/auth/service.server";
+import {
+	commitAuthSession,
+	getAuthSession,
+} from "~/modules/auth/session.server";
 import { isFormProcessing, tw } from "~/utils";
 import { assertIsPost } from "~/utils/http.server";
 
@@ -25,7 +27,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({ title });
+	return { title };
 }
 
 const ResetPasswordSchema = z
@@ -55,7 +57,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	);
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				message: "invalid-request",
 			},
@@ -70,7 +72,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await refreshAccessToken(refreshToken);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{
 				message: "invalid-refresh-token",
 			},
@@ -81,7 +83,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const user = await updateAccountPassword(authSession.userId, password);
 
 	if (!user) {
-		return json(
+		return data(
 			{
 				message: "update-password-error",
 			},

@@ -1,13 +1,14 @@
 import type { ActionFunctionArgs,
 	LoaderFunctionArgs, } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { i18nextServer } from "~/integrations/i18n";
-import { getAuthSession, sendResetPasswordLink } from "~/modules/auth/service.server";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
+import { sendResetPasswordLink } from "~/modules/auth/service.server";
+import { getAuthSession } from "~/modules/auth/session.server";
 import { isFormProcessing, tw } from "~/utils";
 import { assertIsPost } from "~/utils/http.server";
 
@@ -18,7 +19,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({ title });
+	return { title };
 }
 
 const ForgotPasswordSchema = z.object({
@@ -37,7 +38,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	);
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				message: "invalid-request",
 			},
@@ -50,7 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const { error } = await sendResetPasswordLink(email);
 
 	if (error) {
-		return json(
+		return data(
 			{
 				message: "unable-to-send-reset-password-link",
 			},
@@ -58,7 +59,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		);
 	}
 
-	return json({ message: null });
+	return { message: null };
 }
 
 export default function ForgotPassword() {

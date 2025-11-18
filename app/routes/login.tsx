@@ -5,7 +5,7 @@ import type {
 	LoaderFunctionArgs,
 	MetaFunction,
 } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import { Form, Link, useNavigation, useSearchParams } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
@@ -13,8 +13,8 @@ import { z } from "zod";
 
 import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { ContinueWithEmailForm } from "~/modules/auth";
-import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { signInWithEmail } from "~/modules/auth/service.server";
+import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { isFormProcessing } from "~/utils";
 import { assertIsPost } from "~/utils/http.server";
 
@@ -25,7 +25,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({ title });
+	return { title };
 }
 
 const LoginFormSchema = z.object({
@@ -43,7 +43,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const result = await LoginFormSchema.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				errors: result.error,
 			},
@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await signInWithEmail(email, password);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{ errors: { email: "invalid-email-password", password: null } },
 			{ status: 400 },
 		);

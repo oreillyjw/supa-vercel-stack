@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Form, useLoaderData, useRouteError } from "@remix-run/react";
 
 import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
@@ -15,7 +15,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 	if (!note) {
 		throw new Response("Not Found", { status: 404 });
 	}
-	return json({ note });
+	return { note };
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {

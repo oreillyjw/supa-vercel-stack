@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { data, redirect } from "@remix-run/node";
 import { Form, useNavigation } from "@remix-run/react";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
@@ -25,7 +25,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	);
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				errors: result.error,
 			},
