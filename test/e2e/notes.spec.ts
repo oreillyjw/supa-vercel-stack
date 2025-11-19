@@ -10,6 +10,7 @@ import {
 	expectNoteInList,
 	expectNoteNotInList,
 } from "../support/helpers";
+import { deleteUser } from "../support/delete-user";
 
 test.describe("Note Creation", () => {
 	test("should create note with title and body", async ({
@@ -390,8 +391,7 @@ test.describe("Data Isolation", () => {
 		// Cleanup both users
 		await logoutUser(page);
 
-		// Clean up user 1
-		const { deleteUser } = await import("../support/delete-user");
+		// Clean up both users
 		await deleteUser(user1Email);
 		await deleteUser(user2Email);
 	});
@@ -442,7 +442,6 @@ test.describe("Data Isolation", () => {
 
 		// Cleanup
 		await logoutUser(page);
-		const { deleteUser } = await import("../support/delete-user");
 		await deleteUser(user1Email);
 		await deleteUser(user2Email);
 	});
