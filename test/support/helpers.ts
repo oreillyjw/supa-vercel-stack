@@ -1,5 +1,6 @@
 import type { Page, Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
+import type { NoteData } from "./types";
 
 /**
  * Navigation helpers
@@ -65,11 +66,6 @@ export async function logoutUser(page: Page) {
 /**
  * Note helpers
  */
-
-export interface NoteData {
-	title: string;
-	body: string;
-}
 
 export async function createNoteViaUI(
 	page: Page,

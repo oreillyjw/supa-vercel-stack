@@ -3,16 +3,9 @@ import { faker } from "@faker-js/faker";
 import { createAccount } from "./create-user";
 import { deleteUser } from "./delete-user";
 import { loginUser, createNoteViaUI, logoutUser } from "./helpers";
+import type { UserCredentials, NoteData } from "./types";
 
-export interface UserCredentials {
-	email: string;
-	password: string;
-}
-
-export interface NoteData {
-	title: string;
-	body: string;
-}
+export type { UserCredentials, NoteData };
 
 type TestFixtures = {
 	/**
