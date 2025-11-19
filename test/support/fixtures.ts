@@ -66,9 +66,7 @@ type TestFixtures = {
  */
 export const test = base.extend<TestFixtures>({
 	user: async ({}, use) => {
-		const email = faker.internet
-			.email(undefined, undefined, "example.com")
-			.toLowerCase();
+		const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
 		const password = faker.internet.password();
 
 		// Create user before test
@@ -83,9 +81,7 @@ export const test = base.extend<TestFixtures>({
 	},
 
 	authenticatedUser: async ({ page }, use) => {
-		const email = faker.internet
-			.email(undefined, undefined, "example.com")
-			.toLowerCase();
+		const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
 		const password = faker.internet.password();
 
 		// Create user and login
@@ -107,9 +103,7 @@ export const test = base.extend<TestFixtures>({
 	},
 
 	userWithNotes: async ({}, use) => {
-		const email = faker.internet
-			.email(undefined, undefined, "example.com")
-			.toLowerCase();
+		const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
 		const password = faker.internet.password();
 
 		// Create user account
