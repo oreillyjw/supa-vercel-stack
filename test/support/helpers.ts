@@ -99,37 +99,14 @@ export async function deleteNoteViaUI(page: Page): Promise<void> {
 	await page.waitForURL("/notes");
 }
 
-export async function editNoteViaUI(
-	page: Page,
-	newTitle?: string,
-	newBody?: string,
-): Promise<void> {
-	// Assumes we're on the note detail page
-	const titleInput = page.getByRole("textbox", { name: /title/i });
-	const bodyInput = page.getByRole("textbox", { name: /body/i });
-
-	if (newTitle !== undefined) {
-		await titleInput.clear();
-		await titleInput.fill(newTitle);
-	}
-
-	if (newBody !== undefined) {
-		await bodyInput.clear();
-		await bodyInput.fill(newBody);
-	}
-
-	// Submit form
-	await page.getByRole("button", { name: /save/i }).click();
-
-	// Wait for update to complete
-	await page.waitForLoadState("networkidle");
-}
-
 export async function getNoteFromList(
 	page: Page,
 	title: string,
 ): Promise<Locator> {
-	return page.getByRole("link", { name: new RegExp(title, "i") });
+	// Note links have format "📝 {title}" in the UI
+	// Escape special regex characters in the title
+	const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	return page.getByRole("link", { name: new RegExp(`📝\\s*${escapedTitle}`, "i") });
 }
 
 export async function clickNoteInList(page: Page, title: string): Promise<void> {
@@ -170,6 +147,13 @@ export async function expectEmptyNotesState(page: Page) {
 }
 
 export async function expectNoteInList(page: Page, title: string) {
+	// Wait for navigation to complete and notes list to load
+	await page.waitForLoadState("networkidle");
+	// Wait for either the empty state OR the notes list to be visible
+	await Promise.race([
+		page.getByText("No notes yet").waitFor({ state: "visible" }).catch(() => {}),
+		page.locator("ol").first().waitFor({ state: "visible" }).catch(() => {}),
+	]);
 	const noteLink = await getNoteFromList(page, title);
 	await expect(noteLink).toBeVisible();
 }
