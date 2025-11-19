@@ -98,7 +98,7 @@ export default function ForgotPassword() {
 								{zo.errors.email()?.message && (
 									<div
 										className="pt-1 text-red-700"
-										id="password-error"
+										id="email-error"
 									>
 										{zo.errors.email()?.message}
 									</div>
