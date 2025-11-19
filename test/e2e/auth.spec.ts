@@ -14,6 +14,8 @@ import {
 	expectToBeOnNotesPage,
 	expectEmptyNotesState,
 	expectValidationError,
+	expectEmailError,
+	expectPasswordError,
 } from "../support/helpers";
 
 test.describe("Email/Password Authentication", () => {
@@ -41,10 +43,10 @@ test.describe("Email/Password Authentication", () => {
 			await page.getByTestId("password").fill(password);
 			await page.getByTestId("create-account").click();
 
-			// Should stay on join page with error
+			// Should show email validation error
+			await expectEmailError(page);
+			// Should stay on join page
 			await expectToBeOnJoinPage(page);
-			// Note: The exact error message may vary based on translation/validation
-			// We just verify we're still on the join page
 		});
 
 		test("should show error for weak password", async ({ page }) => {
@@ -56,7 +58,9 @@ test.describe("Email/Password Authentication", () => {
 			await page.getByTestId("password").fill(weakPassword);
 			await page.getByTestId("create-account").click();
 
-			// Should stay on join page with error
+			// Should show password validation error
+			await expectPasswordError(page);
+			// Should stay on join page
 			await expectToBeOnJoinPage(page);
 		});
 
@@ -67,9 +71,10 @@ test.describe("Email/Password Authentication", () => {
 			await page.getByTestId("password").fill(faker.internet.password({ length: 12 }));
 			await page.getByTestId("create-account").click();
 
-			// Should stay on join page with error
+			// Should show email error (user already exists)
+			await expectEmailError(page);
+			// Should stay on join page
 			await expectToBeOnJoinPage(page);
-			// The error should indicate user already exists
 		});
 
 		test("should redirect to notes after successful registration", async ({
@@ -104,6 +109,8 @@ test.describe("Email/Password Authentication", () => {
 			await page.getByTestId("password").fill(password);
 			await page.getByTestId("login").click();
 
+			// Should show email validation error
+			await expectEmailError(page);
 			// Should stay on login page
 			await expectToBeOnLoginPage(page);
 		});
@@ -217,7 +224,9 @@ test.describe("Magic Link Authentication", () => {
 			await emailInput.fill(invalidEmail);
 			await page.getByRole("button", { name: /send/i }).click();
 
-			// Should show validation error
+			// Should show email validation error
+			await expectEmailError(page);
+			// Should stay on magic link page
 			await expect(page).toHaveURL("/send-magic-link");
 		}
 	});
@@ -246,7 +255,9 @@ test.describe("Password Reset Flow", () => {
 		await page.getByTestId("email").fill(invalidEmail);
 		await page.getByRole("button", { name: /send/i }).click();
 
-		// Should show validation error
+		// Should show email validation error
+		await expectEmailError(page);
+		// Should stay on forgot password page
 		await expect(page).toHaveURL("/forgot-password");
 	});
 

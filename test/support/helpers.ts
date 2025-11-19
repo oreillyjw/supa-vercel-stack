@@ -166,6 +166,26 @@ export async function expectValidationError(
 	await expect(page.getByText(errorText)).toBeVisible();
 }
 
+export async function expectEmailError(page: Page) {
+	const emailError = page.locator("#email-error");
+	await expect(emailError).toBeVisible();
+}
+
+export async function expectPasswordError(page: Page) {
+	const passwordError = page.locator("#password-error");
+	await expect(passwordError).toBeVisible();
+}
+
+export async function expectTitleError(page: Page) {
+	const titleError = page.locator("#title-error");
+	await expect(titleError).toBeVisible();
+}
+
+export async function expectBodyError(page: Page) {
+	const bodyError = page.locator("#body-error");
+	await expect(bodyError).toBeVisible();
+}
+
 /**
  * Wait helpers
  */

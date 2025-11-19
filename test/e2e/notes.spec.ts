@@ -9,6 +9,8 @@ import {
 	expectEmptyNotesState,
 	expectNoteInList,
 	expectNoteNotInList,
+	expectTitleError,
+	expectBodyError,
 } from "../support/helpers";
 import { deleteUser } from "../support/delete-user";
 
@@ -45,10 +47,10 @@ test.describe("Note Creation", () => {
 		await page.getByRole("textbox", { name: /body/i }).fill(body);
 		await page.getByRole("button", { name: /save/i }).click();
 
-		// Should stay on new note page with validation error
+		// Should show title validation error
+		await expectTitleError(page);
+		// Should stay on new note page
 		await expect(page).toHaveURL("/notes/new");
-		// Should show error message
-		await expect(page.getByText(/require/i)).toBeVisible();
 	});
 
 	test("should show validation error when creating note without body", async ({
@@ -61,10 +63,10 @@ test.describe("Note Creation", () => {
 		await page.getByRole("textbox", { name: /title/i }).fill(title);
 		await page.getByRole("button", { name: /save/i }).click();
 
-		// Should stay on new note page with validation error
+		// Should show body validation error
+		await expectBodyError(page);
+		// Should stay on new note page
 		await expect(page).toHaveURL("/notes/new");
-		// Should show error message
-		await expect(page.getByText(/require/i)).toBeVisible();
 	});
 
 	test.skip("should show note in list and hide empty state after first note", async ({
