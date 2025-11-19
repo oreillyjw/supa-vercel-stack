@@ -13,6 +13,9 @@ import {
 	expectBodyError,
 } from "../support/helpers";
 import { deleteUser } from "../support/delete-user";
+import { createAccount } from "../support/create-user";
+import { getUserId } from "../support/get-user-id";
+import { createNote } from "../support/create-note";
 
 test.describe("Note Creation", () => {
 	test("should create note with title and body", async ({
@@ -345,10 +348,6 @@ test.describe("Data Isolation", () => {
 	});
 
 	test("should not show other users' notes", async ({ page }) => {
-		const { createAccount } = await import("../support/create-user");
-		const { getUserId } = await import("../support/get-user-id");
-		const { createNote } = await import("../support/create-note");
-
 		// Create first user with note (programmatically)
 		const user1Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
 		const user1Password = faker.internet.password({ length: 12 });
@@ -391,10 +390,6 @@ test.describe("Data Isolation", () => {
 	test("should not allow accessing other users' notes via URL", async ({
 		page,
 	}) => {
-		const { createAccount } = await import("../support/create-user");
-		const { getUserId } = await import("../support/get-user-id");
-		const { createNote } = await import("../support/create-note");
-
 		// Create user 1 with a note (programmatically)
 		const user1Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
 		const user1Password = faker.internet.password({ length: 12 });

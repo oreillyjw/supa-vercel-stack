@@ -108,12 +108,12 @@ export default function LoginPage() {
 								className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
 								disabled={disabled}
 							/>
-							{(zo.errors.email()?.message || actionData?.errors?.email) && (
+							{(zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)) && (
 								<div
 									className="pt-1 text-red-700"
 									id="email-error"
 								>
-									{zo.errors.email()?.message || actionData?.errors?.email}
+									{zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)}
 								</div>
 							)}
 						</div>
