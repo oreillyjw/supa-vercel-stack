@@ -1,10 +1,10 @@
 name: ✅ CI
 on:
     push:
-        branches:
+        branches-ignore:
             - main
     pull_request:
-        branches:
+        branches-ignore:
             - main
 permissions:
     actions: write
