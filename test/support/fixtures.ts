@@ -2,7 +2,9 @@ import { test as base, type Page } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 import { createAccount } from "./create-user";
 import { deleteUser } from "./delete-user";
-import { loginUser, createNoteViaUI, logoutUser } from "./helpers";
+import { getUserId } from "./get-user-id";
+import { createNote } from "./create-note";
+import { loginUser, logoutUser } from "./helpers";
 import type { UserCredentials, NoteData } from "./types";
 
 export type { UserCredentials, NoteData };
@@ -104,18 +106,20 @@ export const test = base.extend<TestFixtures>({
 		await deleteUser(email);
 	},
 
-	userWithNotes: async ({ page }, use) => {
+	userWithNotes: async ({}, use) => {
 		const email = faker.internet
 			.email(undefined, undefined, "example.com")
 			.toLowerCase();
 		const password = faker.internet.password();
 
-		// Create user and login
+		// Create user account
 		await createAccount(email, password);
 		const user = { email, password };
-		await loginUser(page, email, password);
 
-		// Create sample notes
+		// Get user ID for note creation
+		const userId = await getUserId(email);
+
+		// Create sample notes programmatically (bypassing UI for reliability)
 		const notes: NoteData[] = [
 			{
 				title: faker.lorem.words(3),
@@ -131,16 +135,12 @@ export const test = base.extend<TestFixtures>({
 			},
 		];
 
+		// Create notes directly in database
 		for (const note of notes) {
-			await createNoteViaUI(page, note.title, note.body);
-			// Navigate back to notes list
-			await page.goto("/notes");
+			await createNote(userId, note);
 		}
 
-		// Logout after creating notes
-		await logoutUser(page);
-
-		// Provide user and notes to test
+		// Provide user and notes to test (user is NOT logged in)
 		await use({ user, notes });
 
 		// Cleanup

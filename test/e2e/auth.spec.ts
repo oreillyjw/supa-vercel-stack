@@ -291,7 +291,7 @@ test.describe("Session Management", () => {
 		await logoutUser(page);
 	});
 
-	test.skip("should maintain session when navigating between routes", async ({
+	test("should maintain session when navigating between routes", async ({
 		page,
 		user,
 	}) => {
