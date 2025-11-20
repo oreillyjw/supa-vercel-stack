@@ -1,6 +1,6 @@
+import { useTranslation } from "react-i18next";
 import type { LinksFunction, LoaderFunction, MetaFunction } from "react-router";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
-import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 
 import { i18nextServer } from "~/integrations/i18n/i18next.server";

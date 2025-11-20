@@ -1,6 +1,6 @@
+import { useTranslation } from "react-i18next";
 import type { LoaderFunctionArgs } from "react-router";
 import { Link, useLoaderData } from "react-router";
-import { useTranslation } from "react-i18next";
 
 import { getAuthSession } from "~/modules/auth/session.server";
 

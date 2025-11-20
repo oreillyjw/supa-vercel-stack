@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useFetcher } from "react-router";
 import { useTranslation } from "react-i18next";
+import { useFetcher } from "react-router";
 
 import type { action } from "~/routes/send-magic-link";
 
