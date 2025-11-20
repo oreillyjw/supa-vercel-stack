@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "react-router";
-import { data, redirect , useActionData, useFetcher, useSearchParams } from "react-router";
+import { data, redirect, useActionData, useFetcher, useSearchParams } from "react-router";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
@@ -15,7 +15,7 @@ import { safeRedirect , assertIsPost } from "~/utils/http.server";
 // we don't want him to fall in a black hole 👽
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);
-	console.log("loader authSession:", authSession);
+
 	if (authSession) return redirect("/notes");
 
 	return {};
@@ -94,6 +94,17 @@ export default function LoginCallback() {
 	const fetcher = useFetcher();
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get("redirectTo") ?? "/notes";
+	const hasSubmitted = useRef(false);
+
+	// Handle navigation after successful fetcher submission
+	// Use window.location for full page reload to pick up the session cookie
+	useEffect(() => {
+		if (fetcher.state === "idle" && hasSubmitted.current && !fetcher.data) {
+			// Fetcher completed without error data - redirect was successful
+			// Full page navigation to pick up the cookie set by the action
+			window.location.href = redirectTo;
+		}
+	}, [fetcher.state, fetcher.data, redirectTo]);
 
 	useEffect(() => {
 		const {
@@ -116,7 +127,8 @@ export default function LoginCallback() {
 				formData.append("refreshToken", refreshToken);
 				formData.append("redirectTo", redirectTo);
 
-				fetcher.submit(formData, { method: "post", });
+				hasSubmitted.current = true;
+				fetcher.submit(formData, { method: "post" });
 			}
 		});
 
@@ -126,5 +138,16 @@ export default function LoginCallback() {
 		};
 	}, [fetcher, redirectTo]);
 
-	return error ? <div>{error.message}</div> : null;
+	return (
+		<div className="flex min-h-screen items-center justify-center">
+			{error ? (
+				<div className="text-red-500">{error.message}</div>
+			) : (
+				<div className="flex flex-col items-center gap-4">
+					<div className="size-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500" />
+					<p className="text-gray-600">Signing you in...</p>
+				</div>
+			)}
+		</div>
+	);
 }
