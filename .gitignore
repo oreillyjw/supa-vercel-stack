@@ -1,7 +1,3 @@
-# We don't want lockfiles in stacks, as people could use a different package manager
-# This part will be removed by `remix.init`
-package-lock.json
-yarn.lock
 pnpm-lock.yaml
 pnpm-lock.yml
 
@@ -12,12 +8,15 @@ node_modules
 /public/build
 .env
 
-/cypress/screenshots
-/cypress/videos
 /prisma/data.db
 /prisma/data.db-journal
 
 /coverage
+
+# Playwright
+/test-results
+/playwright-report
+/playwright/.cache
 
 # Prisma shadow db
 /postgres-data
@@ -30,3 +29,16 @@ node_modules
 **/supabase/.branches
 **/supabase/.temp
 **/supabase/.env
+
+node_modules
+post-log.json
+pre-log.json
+
+.claude/settings.local.json
+/.claude/settings.local.json
+.vercel
+.playwright-mcp/
+.scratchpads
+.scratchpad
+**/*.tsbuildinfo
+.react-router/

@@ -1,18 +1,33 @@
 {
-	"plugins": ["tailwindcss"],
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint", "import", "tailwindcss"],
 	"extends": [
-		"@remix-run/eslint-config",
-		"@remix-run/eslint-config/node",
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:import/recommended",
+		"plugin:import/typescript",
 		"plugin:tailwindcss/recommended",
 		"prettier"
 	],
 	"parserOptions": {
-		"project": ["./tsconfig.json"]
+		"project": ["./tsconfig.json"],
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es2022": true
 	},
 	"settings": {
 		// Help eslint-plugin-tailwindcss to parse Tailwind classes outside of className
 		"tailwindcss": {
 			"callees": ["tw"]
+		},
+		"import/resolver": {
+			"typescript": {
+				"alwaysTryTypes": true
+			}
 		},
 		"jest": {
 			"version": 27
@@ -22,8 +37,8 @@
 		"no-console": "warn",
 		"arrow-body-style": ["warn", "as-needed"],
 		// @typescript-eslint
-		"@typescript-eslint/no-duplicate-imports": "error",
 		"@typescript-eslint/consistent-type-imports": "error",
+		"import/no-duplicates": "error",
 		"@typescript-eslint/no-unused-vars": [
 			"warn",
 			{
@@ -64,11 +79,35 @@
 				"./app/root.tsx",
 				"./app/entry.client.tsx",
 				"./app/entry.server.tsx",
-				"./app/routes/**/*.tsx"
+				"./app/routes/**/*.tsx",
+				"./app/routes.ts",
+				"./react-router.config.ts"
 			],
 			"rules": {
 				"import/no-default-export": "off"
 			}
+		},
+		{
+			"files": ["./app/entry.server.tsx"],
+			"rules": {
+				"no-async-promise-executor": "off"
+			}
+		},
+		{
+			"files": ["./app/utils/env.ts"],
+			"rules": {
+				"@typescript-eslint/no-namespace": "off"
+			}
+		},
+		{
+			"files": ["*.js"],
+			"parserOptions": {
+				"project": null
+			},
+			"rules": {
+				"@typescript-eslint/no-require-imports": "off"
+			}
 		}
-	]
+	],
+	"ignorePatterns": ["coverage/**", "build/**", "node_modules/**", ".react-router/**"]
 }

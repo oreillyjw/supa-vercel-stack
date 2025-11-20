@@ -249,3 +249,9 @@ To do that navigate to Authentication > URL configiration and add the folowing v
 -   https://staging-domain.com/reset-password
 -   https://live-domain.com/oauth/callback
 -   https://live-domain.com/reset-password
+
+## Old project
+
+```shell
+ack 'supa-fly-stack'
+```

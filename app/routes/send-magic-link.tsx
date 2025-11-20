@@ -1,10 +1,15 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { ActionFunctionArgs } from "react-router";
+import { data, redirect } from "react-router";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
-import { sendMagicLink } from "~/modules/auth";
+import { sendMagicLink } from "~/modules/auth/service.server";
 import { assertIsPost } from "~/utils/http.server";
+
+// Redirect GET requests to login - this is an action-only route
+export async function loader() {
+	return redirect("/login");
+}
 
 export async function action({ request }: ActionFunctionArgs) {
 	assertIsPost(request);
@@ -20,9 +25,9 @@ export async function action({ request }: ActionFunctionArgs) {
 		.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
-				error: "invalid-email",
+				error: "invalid-email" as const,
 			},
 			{ status: 400 },
 		);
@@ -32,13 +37,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
 	if (error) {
 		console.error(error);
-		return json(
+		return data(
 			{
-				error: "unable-to-send-magic-link",
+				error: "unable-to-send-magic-link" as const,
 			},
 			{ status: 500 },
 		);
 	}
 
-	return json({ error: null });
+	return data({ error: null });
 }

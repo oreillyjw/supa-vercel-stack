@@ -1,10 +1,10 @@
 import { resolve } from "node:path";
 
-import type { EntryContext } from "@remix-run/node";
 import { createInstance } from "i18next";
 import Backend from "i18next-fs-backend";
 import { initReactI18next } from "react-i18next";
-import { RemixI18Next } from "remix-i18next";
+import type { EntryContext } from "react-router";
+import { RemixI18Next } from "remix-i18next/server";
 
 import { config } from "./config"; // your i18n configuration file
 

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useFetcher } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { useFetcher } from "react-router";
 
 import type { action } from "~/routes/send-magic-link";
 
@@ -9,7 +9,9 @@ export function ContinueWithEmailForm() {
 	const ref = React.useRef<HTMLFormElement>(null);
 	const sendMagicLink = useFetcher<typeof action>();
 	const { data, state } = sendMagicLink;
-	const isSuccessFull = state === "idle" && data != null && !data.error;
+	const error =
+		data && "error" in data ? (data.error as string | null) : null;
+	const isSuccessFull = state === "idle" && data != null && !error;
 	const isLoading = state === "submitting" || state === "loading";
 	const { t } = useTranslation("auth");
 	const buttonLabel = isLoading
@@ -37,10 +39,10 @@ export function ContinueWithEmailForm() {
 			/>
 			<div
 				className={`mb-2 h-6 text-center ${
-					data?.error ? "text-red-600" : ""
+					error ? "text-red-600" : ""
 				} ${isSuccessFull ? "text-green-600" : ""}`}
 			>
-				{!isSuccessFull ? data?.error : t("register.checkEmail")}
+				{!isSuccessFull ? error : t("register.checkEmail")}
 			</div>
 			<button
 				type="submit"
