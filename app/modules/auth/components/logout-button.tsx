@@ -1,5 +1,5 @@
-import { Form } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { Form } from "react-router";
 
 export function LogoutButton() {
 	const { t } = useTranslation("auth");

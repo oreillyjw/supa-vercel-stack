@@ -1,5 +1,5 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import type { ActionFunctionArgs } from "react-router";
+import { redirect } from "react-router";
 
 import { destroyAuthSession } from "~/modules/auth/session.server";
 import { assertIsPost } from "~/utils/http.server";

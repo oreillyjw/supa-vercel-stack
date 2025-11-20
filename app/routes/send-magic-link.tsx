@@ -1,10 +1,15 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { data } from "@remix-run/node";
+import type { ActionFunctionArgs } from "react-router";
+import { data, redirect } from "react-router";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
 import { sendMagicLink } from "~/modules/auth/service.server";
 import { assertIsPost } from "~/utils/http.server";
+
+// Redirect GET requests to login - this is an action-only route
+export async function loader() {
+	return redirect("/login");
+}
 
 export async function action({ request }: ActionFunctionArgs) {
 	assertIsPost(request);

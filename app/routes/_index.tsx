@@ -1,6 +1,6 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import type { LoaderFunctionArgs } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 import { getAuthSession } from "~/modules/auth/session.server";
 
@@ -75,10 +75,10 @@ export default function Index() {
 									</div>
 								)}
 							</div>
-							<a href="https://remix.run">
+							<a href="https://reactrouter.com">
 								<img
-									src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-									alt="Remix"
+									src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Lockup/Dark.svg"
+									alt="React Router"
 									className="mx-auto mt-16 w-full max-w-48 md:max-w-64"
 								/>
 							</a>

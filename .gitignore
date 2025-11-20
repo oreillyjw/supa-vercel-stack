@@ -41,3 +41,4 @@ pre-log.json
 .scratchpads
 .scratchpad
 **/*.tsbuildinfo
+.react-router/

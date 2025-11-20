@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { data, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { data, redirect , Form, Link, useActionData, useNavigation } from "react-router";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 

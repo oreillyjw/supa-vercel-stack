@@ -4,13 +4,10 @@
 // and that user will get deleted
 
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { installGlobals } from "@remix-run/node";
 
 import { db } from "~/database";
 import { deleteAuthAccount } from "~/modules/auth/service.server";
 import { getUserByEmail } from "~/modules/user/service.server";
-
-installGlobals();
 
 export async function deleteUser(email: string) {
 	if (!email) {

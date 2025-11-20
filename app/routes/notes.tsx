@@ -1,5 +1,5 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, Outlet, Link, NavLink } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { useLoaderData, Outlet, Link, NavLink } from "react-router";
 
 import { LogoutButton } from "~/modules/auth";
 import { requireAuthSession } from "~/modules/auth/session.server";
