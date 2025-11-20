@@ -7,7 +7,7 @@ test.describe("smoke tests", () => {
 	test("should allow you to register and login", async ({ page }) => {
 		const loginForm = {
 			email: faker.internet
-				.email(undefined, undefined, "example.com")
+				.email({ provider: "example.com" })
 				.toLowerCase(),
 			password: faker.internet.password(),
 		};
@@ -44,7 +44,7 @@ test.describe("smoke tests", () => {
 		};
 		const credentials = {
 			email: faker.internet
-				.email(undefined, undefined, "example.com")
+				.email({ provider: "example.com" })
 				.toLowerCase(),
 			password: faker.internet.password(),
 		};
