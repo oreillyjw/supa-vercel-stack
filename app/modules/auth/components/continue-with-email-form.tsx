@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useFetcher } from "@remix-run/react";
+import { useFetcher } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import type { action } from "~/routes/send-magic-link";

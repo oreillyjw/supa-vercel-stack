@@ -1,7 +1,6 @@
-import type { ActionFunctionArgs,
-	LoaderFunctionArgs, } from "@remix-run/node";
-import { data, redirect } from "@remix-run/node";
-import { Form, useActionData, useNavigation } from "@remix-run/react";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { data, redirect } from "react-router";
+import { Form, useActionData, useNavigation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";

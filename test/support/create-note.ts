@@ -1,12 +1,8 @@
 // Use this to programmatically create notes for test fixtures
 // This bypasses the UI and creates notes directly in the database
 
-import { installGlobals } from "@remix-run/node";
-
 import { db } from "~/database";
 import type { NoteData } from "./types";
-
-installGlobals();
 
 export async function createNote(
 	userId: string,

@@ -1,10 +1,6 @@
 // Use this to get a user's ID by their email address
 
-import { installGlobals } from "@remix-run/node";
-
 import { db } from "~/database";
-
-installGlobals();
 
 export async function getUserId(email: string): Promise<string> {
 	if (!email) {

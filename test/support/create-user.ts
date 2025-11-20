@@ -3,12 +3,8 @@
 // npx tsx ./tests/support/create-user.ts username@example.com password
 // and it will create the user account
 
-import { installGlobals } from "@remix-run/node";
-
 import { db } from "~/database";
 import { createEmailAuthAccount } from "~/modules/auth/service.server";
-
-installGlobals();
 
 export async function createAccount(email: string, password: string) {
 	if (!email || !password) {

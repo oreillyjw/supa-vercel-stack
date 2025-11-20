@@ -1,16 +1,5 @@
-import type {
-	LinksFunction,
-	LoaderFunction,
-	MetaFunction,
-} from "@remix-run/node";
-import {
-	Links,
-	Meta,
-	Outlet,
-	Scripts,
-	ScrollRestoration,
-	useLoaderData,
-} from "@remix-run/react";
+import type { LinksFunction, LoaderFunction, MetaFunction } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 
@@ -28,6 +17,11 @@ export const meta: MetaFunction = () => [
 	{ name: "description", content: "Remix Notes App" },
 ];
 
+type LoaderData = {
+	locale: string;
+	env: ReturnType<typeof getBrowserEnv>;
+};
+
 export const loader: LoaderFunction = async ({ request }) => {
 	const locale = await i18nextServer.getLocale(request);
 	return {
@@ -37,7 +31,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
-	const { env, locale } = useLoaderData<typeof loader>();
+	const { env, locale } = useLoaderData<LoaderData>();
 	const { i18n } = useTranslation();
 
 	useChangeLanguage(locale);
