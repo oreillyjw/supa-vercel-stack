@@ -77,7 +77,7 @@ export default function Index() {
 							</div>
 							<a href="https://reactrouter.com">
 								<img
-									src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Lockup/Light.svg"
+									src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Lockup/Dark.svg"
 									alt="React Router"
 									className="mx-auto mt-16 w-full max-w-48 md:max-w-64"
 								/>

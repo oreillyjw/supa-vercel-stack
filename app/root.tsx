@@ -13,8 +13,8 @@ export const links: LinksFunction = () => [
 ];
 
 export const meta: MetaFunction = () => [
-	{ title: "Remix Notes" },
-	{ name: "description", content: "Remix Notes App" },
+	{ title: "React Router Notes" },
+	{ name: "description", content: "React Router Notes App" },
 ];
 
 type LoaderData = {
