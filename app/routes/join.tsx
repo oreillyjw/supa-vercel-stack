@@ -6,7 +6,7 @@ import type {
 	MetaFunction,
 } from "@remix-run/node";
 import { redirect, data } from "@remix-run/node";
-import { Form, Link, useNavigation, useSearchParams } from "@remix-run/react";
+import { Form, Link, useActionData, useNavigation, useSearchParams } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
@@ -92,6 +92,7 @@ export default function Join() {
 	const navigation = useNavigation();
 	const disabled = isFormProcessing(navigation.state);
 	const { t } = useTranslation("auth");
+	const actionData = useActionData<typeof action>();
 
 	return (
 		<div className="flex min-h-full flex-col justify-center">
@@ -115,12 +116,12 @@ export default function Join() {
 								className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
 								disabled={disabled}
 							/>
-							{zo.errors.email()?.message && (
+							{(zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)) && (
 								<div
 									className="pt-1 text-red-700"
 									id="email-error"
 								>
-									{zo.errors.email()?.message}
+									{zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)}
 								</div>
 							)}
 						</div>
