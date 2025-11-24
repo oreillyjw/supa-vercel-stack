@@ -91,12 +91,12 @@ jobs:
               - name: 🔑 Make envfile
                 uses: SpicyPizza/create-envfile@v1.3
                 with:
-                    envkey_SESSION_SECRET: ${{ secrets.CI_SESSION_SECRET }}
-                    envkey_SUPABASE_ANON_PUBLIC: ${{ secrets.CI_SUPABASE_ANON_PUBLIC }}
-                    envkey_SUPABASE_SERVICE_ROLE: ${{ secrets.CI_SUPABASE_SERVICE_ROLE }}
+                    envkey_SUPABASE_JWT_SECRET: ${{ secrets.CI_SUPABASE_JWT_SECRET }}
+                    envkey_SUPABASE_ANON_KEY: ${{ secrets.CI_SUPABASE_ANON_KEY }}
+                    envkey_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.CI_SUPABASE_SERVICE_ROLE_KEY }}
                     envkey_SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
                     envkey_SERVER_URL: ${{ secrets.CI_SERVER_URL }}
-                    envkey_DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
+                    envkey_POSTGRES_PRISMA_URL: ${{ secrets.CI_POSTGRES_PRISMA_URL }}
                     file_name: .env
 
               - name: ⎔ Setup node
@@ -153,13 +153,12 @@ jobs:
                     })();
                     "
                 env:
-                    SESSION_SECRET: ${{ secrets.CI_SESSION_SECRET }}
-                    SUPABASE_ANON_PUBLIC: ${{ secrets.CI_SUPABASE_ANON_PUBLIC }}
-                    SUPABASE_SERVICE_ROLE: ${{ secrets.CI_SUPABASE_SERVICE_ROLE }}
-                    SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
-                    SERVER_URL: ${{ secrets.CI_SERVER_URL }}
-                    DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
-
+                  envkey_SUPABASE_JWT_SECRET: ${{ secrets.CI_SUPABASE_JWT_SECRET }}
+                  envkey_SUPABASE_ANON_KEY: ${{ secrets.CI_SUPABASE_ANON_KEY }}
+                  envkey_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.CI_SUPABASE_SERVICE_ROLE_KEY }}
+                  envkey_SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
+                  envkey_SERVER_URL: ${{ secrets.CI_SERVER_URL }}
+                  envkey_POSTGRES_PRISMA_URL: ${{ secrets.CI_POSTGRES_PRISMA_URL }}
 
               - name: 🎭 Install Playwright Browsers
                 run: npx playwright install --with-deps chromium

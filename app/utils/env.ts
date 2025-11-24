@@ -4,7 +4,7 @@ declare global {
 	interface Window {
 		env: {
 			SUPABASE_URL: string;
-			SUPABASE_ANON_PUBLIC: string;
+			SUPABASE_ANON_KEY: string;
 		};
 	}
 }
@@ -13,10 +13,10 @@ declare global {
 	namespace NodeJS {
 		interface ProcessEnv {
 			SUPABASE_URL: string;
-			SUPABASE_SERVICE_ROLE: string;
+			SUPABASE_SERVICE_ROLE_KEY: string;
 			SERVER_URL: string;
-			SUPABASE_ANON_PUBLIC: string;
-			SESSION_SECRET: string;
+			SUPABASE_ANON_KEY: string;
+			SUPABASE_JWT_SECRET: string;
 		}
 	}
 }
@@ -46,8 +46,8 @@ function getEnv(
  * Server env
  */
 export const SERVER_URL = getEnv("SERVER_URL");
-export const SUPABASE_SERVICE_ROLE = getEnv("SUPABASE_SERVICE_ROLE");
-export const SESSION_SECRET = getEnv("SESSION_SECRET");
+export const SUPABASE_SERVICE_ROLE_KEY = getEnv("SUPABASE_SERVICE_ROLE_KEY");
+export const SUPABASE_JWT_SECRET = getEnv("SUPABASE_JWT_SECRET");
 
 /**
  * Shared envs
@@ -57,13 +57,13 @@ export const NODE_ENV = getEnv("NODE_ENV", {
 	isRequired: false,
 });
 export const SUPABASE_URL = getEnv("SUPABASE_URL", { isSecret: false });
-export const SUPABASE_ANON_PUBLIC = getEnv("SUPABASE_ANON_PUBLIC", {
+export const SUPABASE_ANON_KEY = getEnv("SUPABASE_ANON_KEY", {
 	isSecret: false,
 });
 
 export function getBrowserEnv() {
 	return {
 		SUPABASE_URL,
-		SUPABASE_ANON_PUBLIC,
+		SUPABASE_ANON_KEY,
 	};
 }
