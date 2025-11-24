@@ -153,12 +153,13 @@ jobs:
                     })();
                     "
                 env:
-                  envkey_SUPABASE_JWT_SECRET: ${{ secrets.CI_SUPABASE_JWT_SECRET }}
-                  envkey_SUPABASE_ANON_KEY: ${{ secrets.CI_SUPABASE_ANON_KEY }}
-                  envkey_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.CI_SUPABASE_SERVICE_ROLE_KEY }}
-                  envkey_SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
-                  envkey_SERVER_URL: ${{ secrets.CI_SERVER_URL }}
-                  envkey_POSTGRES_PRISMA_URL: ${{ secrets.CI_POSTGRES_PRISMA_URL }}
+                  SUPABASE_JWT_SECRET: ${{ secrets.CI_SUPABASE_JWT_SECRET }}
+                  SUPABASE_ANON_KEY: ${{ secrets.CI_SUPABASE_ANON_KEY }}
+                  SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.CI_SUPABASE_SERVICE_ROLE_KEY }}
+                  SUPABASE_URL: ${{ secrets.CI_SUPABASE_URL }}
+                  SERVER_URL: ${{ secrets.CI_SERVER_URL }}
+                  POSTGRES_PRISMA_URL: ${{ secrets.CI_POSTGRES_PRISMA_URL }}
+
 
               - name: 🎭 Install Playwright Browsers
                 run: npx playwright install --with-deps chromium
