@@ -4,6 +4,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "vite build",
+    "vercel-build": "prisma generate && vite build",
     "db:prepare-migration": "prisma migrate dev --create-only --skip-seed",
     "db:deploy-migration": "prisma migrate deploy",
     "dev": "vite dev",
