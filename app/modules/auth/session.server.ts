@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from "react-router";
 
-import { NODE_ENV, SESSION_SECRET } from "~/utils";
+import { NODE_ENV, SUPABASE_JWT_SECRET } from "~/utils";
 import {
 	getCurrentPath,
 	isGet,
@@ -27,7 +27,7 @@ const sessionStorage = createCookieSessionStorage({
 		httpOnly: true,
 		path: "/",
 		sameSite: "lax",
-		secrets: [SESSION_SECRET],
+		secrets: [SUPABASE_JWT_SECRET],
 		secure: NODE_ENV === "production",
 	},
 });
