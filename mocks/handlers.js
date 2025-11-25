@@ -1,4 +1,5 @@
 import { http } from "msw";
+
 import { USER_EMAIL, USER_ID, USER_PASSWORD } from "./user.js";
 
 const supabaseAuthSession = {
