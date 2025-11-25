@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "react-router";
 import { useLoaderData, Outlet, Link, NavLink } from "react-router";
 
-import { LogoutButton } from "~/modules/auth";
+import { LogoutButton } from "~/modules/auth/components/logout-button";
 import { requireAuthSession } from "~/modules/auth/session.server";
 import { getNotes } from "~/modules/note/service.server";
 import { notFound } from "~/utils/http.server";

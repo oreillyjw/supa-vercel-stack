@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from "react-router";
 
-import { NODE_ENV, SUPABASE_JWT_SECRET } from "~/utils";
+import { NODE_ENV, SUPABASE_JWT_SECRET } from "~/utils/env";
 import {
 	getCurrentPath,
 	isGet,

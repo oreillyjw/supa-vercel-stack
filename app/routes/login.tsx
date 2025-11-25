@@ -7,10 +7,10 @@ import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
 import { i18nextServer } from "~/integrations/i18n/i18next.server";
-import { ContinueWithEmailForm } from "~/modules/auth";
+import { ContinueWithEmailForm } from "~/modules/auth/components/continue-with-email-form";
 import { signInWithEmail } from "~/modules/auth/service.server";
 import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
-import { isFormProcessing } from "~/utils";
+import { isFormProcessing } from "~/utils/form";
 import { assertIsPost } from "~/utils/http.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
