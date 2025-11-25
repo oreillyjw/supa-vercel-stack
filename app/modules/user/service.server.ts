@@ -1,11 +1,11 @@
-import type { User } from "~/database";
-import { db } from "~/database";
-import type { AuthSession } from "~/modules/auth";
+import type { User } from "~/database/db.server";
+import { db } from "~/database/db.server";
 import {
 	createEmailAuthAccount,
 	signInWithEmail,
 	deleteAuthAccount,
 } from "~/modules/auth/service.server";
+import type { AuthSession } from "~/modules/auth/types";
 
 export async function getUserByEmail(email: User["email"]) {
 	return db.user.findUnique({ where: { email: email.toLowerCase() } });

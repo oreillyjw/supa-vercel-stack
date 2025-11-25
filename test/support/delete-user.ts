@@ -5,7 +5,7 @@
 
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 import { deleteAuthAccount } from "~/modules/auth/service.server";
 import { getUserByEmail } from "~/modules/user/service.server";
 
@@ -51,6 +51,6 @@ export async function deleteUser(email: string) {
 }
 
 // Allow script execution
-if (require.main === module) {
-	deleteUser(process.argv[2]);
-}
+// if (require.main === module) {
+// 	deleteUser(process.argv[2]);
+// }

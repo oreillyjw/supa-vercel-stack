@@ -7,8 +7,9 @@ import { z } from "zod";
 import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { sendResetPasswordLink } from "~/modules/auth/service.server";
 import { getAuthSession } from "~/modules/auth/session.server";
-import { isFormProcessing, tw } from "~/utils";
+import { isFormProcessing } from "~/utils/form";
 import { assertIsPost } from "~/utils/http.server";
+import { tw } from "~/utils/tw-classes";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);

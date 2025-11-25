@@ -2,16 +2,10 @@
 
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-	// @ts-expect-error - vitest uses a different version of vite internally
-	plugins: [react()],
-	resolve: {
-		alias: {
-			"~": new URL("./app", import.meta.url).pathname,
-			"mocks": new URL("./mocks", import.meta.url).pathname,
-		},
-	},
+	plugins: [react(), tsconfigPaths()] as any,
 	test: {
 		globals: true,
 		environment: "happy-dom",
@@ -19,9 +13,11 @@ export default defineConfig({
 		includeSource: ["app/**/*.{js,ts}"],
 		exclude: ["node_modules", "mocks/**/*.{js,ts}", "test/e2e/**"],
 		coverage: {
+			provider: "v8",
 			reporter: ["text", "json", "html"],
 			include: ["app/**/*.{js,ts}"],
 			all: true,
 		},
+		pool: "forks",
 	},
 });

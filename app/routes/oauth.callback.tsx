@@ -5,7 +5,7 @@ import { data, redirect, useActionData, useFetcher, useSearchParams } from "reac
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
-import { supabaseClient } from "~/integrations/supabase";
+import { supabaseClient } from "~/integrations/supabase/client";
 import { refreshAccessToken } from "~/modules/auth/service.server";
 import { commitAuthSession, getAuthSession } from "~/modules/auth/session.server";
 import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";

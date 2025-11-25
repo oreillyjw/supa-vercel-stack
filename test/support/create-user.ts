@@ -3,7 +3,7 @@
 // npx tsx ./tests/support/create-user.ts username@example.com password
 // and it will create the user account
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 import { createEmailAuthAccount } from "~/modules/auth/service.server";
 
 export async function createAccount(email: string, password: string) {
@@ -42,6 +42,6 @@ export async function createAccount(email: string, password: string) {
 }
 
 // Allow script execution
-if (require.main === module) {
-	createAccount(process.argv[2], process.argv[3]);
-}
+// if (require.main === module) {
+// 	createAccount(process.argv[2], process.argv[3]);
+// }

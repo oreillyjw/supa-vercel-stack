@@ -1,7 +1,7 @@
 // learn more: https://fly.io/docs/reference/configuration/#services-http_checks
 import type { LoaderFunctionArgs } from "react-router";
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const host =

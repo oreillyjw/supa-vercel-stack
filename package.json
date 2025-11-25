@@ -2,6 +2,7 @@
   "name": "supa-vercel-stack-template",
   "private": true,
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "vercel-build": "prisma generate && vite build",
