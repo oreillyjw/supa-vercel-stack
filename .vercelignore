@@ -1,29 +1,13 @@
-# Test files
-test/
-*.spec.ts
-*.test.ts
-playwright.config.ts
+/node_modules
+*.log
+.DS_Store
+/.cache
+/tests
+/app/database/migrations
+/app/database/seed.server.ts
+.env.example
+README.md
 vitest.config.ts
-
-# Database migrations (handled separately)
-app/database/migrations/
-
-# Configuration files
-.env*
-!.env.example
-supabase/
-.github/
-
-# Development files
-.scratchpads/
-*.md
-!README.md
-
-# IDE and editor files
-.vscode/
-.idea/
-
-# Cache and build artifacts
-node_modules/
-.cache/
-coverage/
+.eslintrc.js
+.prettierrc
+tsconfig.json

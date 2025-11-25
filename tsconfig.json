@@ -16,7 +16,15 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./app/*"]
+			"~/*": ["./app/*"],
+			"~/components/*": ["./app/components/*"],
+			"~/database/*": ["./app/database/*"],
+			"~/hooks/*": ["./app/hooks/*"],
+			"~/integrations/*": ["./app/integrations/*"],
+			"~/lib/*": ["./app/lib/*"],
+			"~/modules/*": ["./app/modules/*"],
+			"~/utils/*": ["./app/utils/*"],
+			"mocks": ["./mocks/index.js"]
 		},
 		"skipLibCheck": true,
 		// Vite takes care of building everything in `vite build`.

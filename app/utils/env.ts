@@ -61,6 +61,13 @@ export const SUPABASE_ANON_KEY = getEnv("SUPABASE_ANON_KEY", {
 	isSecret: false,
 });
 
+
+export const getSupabaseServiceRole = () => {
+	if (isBrowser)
+		throw new Error("SUPABASE_SERVICE_ROLE_KEY is not available in browser");
+	return getEnv("SUPABASE_SERVICE_ROLE_KEY");
+};
+
 export function getBrowserEnv() {
 	return {
 		SUPABASE_URL,
