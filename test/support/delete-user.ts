@@ -5,7 +5,7 @@
 
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 import { deleteAuthAccount } from "~/modules/auth/service.server";
 import { getUserByEmail } from "~/modules/user/service.server";
 

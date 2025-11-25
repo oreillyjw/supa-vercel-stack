@@ -1,7 +1,7 @@
 // Use this to programmatically create notes for test fixtures
 // This bypasses the UI and creates notes directly in the database
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 import type { NoteData } from "./types";
 
 export async function createNote(

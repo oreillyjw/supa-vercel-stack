@@ -1,6 +1,6 @@
 // Use this to get a user's ID by their email address
 
-import { db } from "~/database";
+import { db } from "~/database/db.server";
 
 export async function getUserId(email: string): Promise<string> {
 	if (!email) {

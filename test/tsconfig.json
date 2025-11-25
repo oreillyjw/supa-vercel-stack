@@ -17,7 +17,15 @@
 		"resolveJsonModule": true,
 		"typeRoots": ["../types", "../node_modules/@types"],
 		"paths": {
-			"~/*": ["../app/*"]
+			"~/*": ["../app/*"],
+			"~/components/*": ["../app/components/*"],
+			"~/database/*": ["../app/database/*"],
+			"~/hooks/*": ["../app/hooks/*"],
+			"~/integrations/*": ["../app/integrations/*"],
+			"~/lib/*": ["../app/lib/*"],
+			"~/modules/*": ["../app/modules/*"],
+			"~/utils/*": ["../app/utils/*"],
+			"mocks": ["../mocks/index.js"]
 		}
 	}
 }
