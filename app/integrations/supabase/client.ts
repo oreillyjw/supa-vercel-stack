@@ -1,9 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 
 import {
-	SUPABASE_SERVICE_ROLE,
+	getSupabaseServiceRole,
 	SUPABASE_URL,
-	SUPABASE_ANON_PUBLIC,
+	SUPABASE_ANON_KEY,
 } from "~/utils/env";
 import { isBrowser } from "~/utils/is-browser";
 
@@ -17,7 +17,7 @@ function getSupabaseClient(supabaseKey: string, accessToken?: string) {
 						Authorization: `Bearer ${accessToken}`,
 					},
 				},
-		  }
+			}
 		: {};
 
 	return createClient(SUPABASE_URL, supabaseKey, {
@@ -42,9 +42,9 @@ function getSupabaseAdmin() {
 			"getSupabaseAdmin is not available in browser and should NOT be used in insecure environments",
 		);
 
-	return getSupabaseClient(SUPABASE_SERVICE_ROLE);
+	return getSupabaseClient(getSupabaseServiceRole());
 }
 
-const supabaseClient = getSupabaseClient(SUPABASE_ANON_PUBLIC);
+const supabaseClient = getSupabaseClient(SUPABASE_ANON_KEY);
 
 export { getSupabaseAdmin, supabaseClient };

@@ -1,24 +1,17 @@
 import * as React from "react";
 
-import type {
-	ActionFunctionArgs,
-	LoaderFunctionArgs,
-	MetaFunction,
-} from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
-import { Form, Link, useNavigation, useSearchParams } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "react-router";
+import { redirect, data , Form, Link, useActionData, useNavigation, useSearchParams } from "react-router";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
-import { i18nextServer } from "~/integrations/i18n";
-import {
-	createAuthSession,
-	getAuthSession,
-	ContinueWithEmailForm,
-} from "~/modules/auth";
-import { getUserByEmail, createUserAccount } from "~/modules/user";
-import { assertIsPost, isFormProcessing } from "~/utils";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
+import { ContinueWithEmailForm } from "~/modules/auth/components/continue-with-email-form";
+import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
+import { getUserByEmail, createUserAccount } from "~/modules/user/service.server";
+import { isFormProcessing } from "~/utils/form";
+import { assertIsPost } from "~/utils/http.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const authSession = await getAuthSession(request);
@@ -27,7 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({ title });
+	return { title };
 }
 
 const JoinFormSchema = z.object({
@@ -45,7 +38,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const result = await JoinFormSchema.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				errors: result.error,
 			},
@@ -58,7 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const existingUser = await getUserByEmail(email);
 
 	if (existingUser) {
-		return json(
+		return data(
 			{ errors: { email: "user-already-exist", password: null } },
 			{ status: 400 },
 		);
@@ -67,7 +60,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await createUserAccount(email, password);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{ errors: { email: "unable-to-create-account", password: null } },
 			{ status: 500 },
 		);
@@ -94,6 +87,7 @@ export default function Join() {
 	const navigation = useNavigation();
 	const disabled = isFormProcessing(navigation.state);
 	const { t } = useTranslation("auth");
+	const actionData = useActionData<typeof action>();
 
 	return (
 		<div className="flex min-h-full flex-col justify-center">
@@ -117,12 +111,12 @@ export default function Join() {
 								className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
 								disabled={disabled}
 							/>
-							{zo.errors.email()?.message && (
+							{(zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)) && (
 								<div
 									className="pt-1 text-red-700"
 									id="email-error"
 								>
-									{zo.errors.email()?.message}
+									{zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)}
 								</div>
 							)}
 						</div>

@@ -1,19 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-import { json, redirect } from "@remix-run/node";
-import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import { useActionData, useFetcher, useSearchParams } from "@remix-run/react";
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "react-router";
+import { data, redirect, useActionData, useFetcher, useSearchParams } from "react-router";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
-import { supabaseClient } from "~/integrations/supabase";
-import {
-	refreshAccessToken,
-	commitAuthSession,
-	getAuthSession,
-} from "~/modules/auth";
-import { tryCreateUser, getUserByEmail } from "~/modules/user";
-import { assertIsPost, safeRedirect } from "~/utils";
+import { supabaseClient } from "~/integrations/supabase/client";
+import { refreshAccessToken } from "~/modules/auth/service.server";
+import { commitAuthSession, getAuthSession } from "~/modules/auth/session.server";
+import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";
+import { safeRedirect , assertIsPost } from "~/utils/http.server";
 
 // imagine a user go back after OAuth login success or type this URL
 // we don't want him to fall in a black hole 👽
@@ -22,7 +18,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (authSession) return redirect("/notes");
 
-	return json({});
+	return {};
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -37,7 +33,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		.safeParseAsync(parseFormAny(formData));
 
 	if (!result.success) {
-		return json(
+		return data(
 			{
 				message: "invalid-request",
 			},
@@ -53,7 +49,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const authSession = await refreshAccessToken(refreshToken);
 
 	if (!authSession) {
-		return json(
+		return data(
 			{
 				message: "invalid-refresh-token",
 			},
@@ -76,7 +72,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const user = await tryCreateUser(authSession);
 
 	if (!user) {
-		return json(
+		return data(
 			{
 				message: "create-user-error",
 			},
@@ -98,6 +94,17 @@ export default function LoginCallback() {
 	const fetcher = useFetcher();
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get("redirectTo") ?? "/notes";
+	const hasSubmitted = useRef(false);
+
+	// Handle navigation after successful fetcher submission
+	// Use window.location for full page reload to pick up the session cookie
+	useEffect(() => {
+		if (fetcher.state === "idle" && hasSubmitted.current && !fetcher.data) {
+			// Fetcher completed without error data - redirect was successful
+			// Full page navigation to pick up the cookie set by the action
+			window.location.href = redirectTo;
+		}
+	}, [fetcher.state, fetcher.data, redirectTo]);
 
 	useEffect(() => {
 		const {
@@ -120,7 +127,8 @@ export default function LoginCallback() {
 				formData.append("refreshToken", refreshToken);
 				formData.append("redirectTo", redirectTo);
 
-				fetcher.submit(formData, { method: "post", });
+				hasSubmitted.current = true;
+				fetcher.submit(formData, { method: "post" });
 			}
 		});
 
@@ -130,5 +138,16 @@ export default function LoginCallback() {
 		};
 	}, [fetcher, redirectTo]);
 
-	return error ? <div>{error.message}</div> : null;
+	return (
+		<div className="flex min-h-screen items-center justify-center">
+			{error ? (
+				<div className="text-red-500">{error.message}</div>
+			) : (
+				<div className="flex flex-col items-center gap-4">
+					<div className="size-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500" />
+					<p className="text-gray-600">Signing you in...</p>
+				</div>
+			)}
+		</div>
+	);
 }

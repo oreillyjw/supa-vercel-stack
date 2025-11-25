@@ -1,24 +1,11 @@
-import type {
-	LinksFunction,
-	LoaderFunction,
-	MetaFunction,
-} from "@remix-run/node";
-import { json } from "@remix-run/node";
-import {
-	Links,
-	LiveReload,
-	Meta,
-	Outlet,
-	Scripts,
-	ScrollRestoration,
-	useLoaderData,
-} from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import { useChangeLanguage } from "remix-i18next";
+import type { LinksFunction, LoaderFunction, MetaFunction } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
+import { useChangeLanguage } from "remix-i18next/react";
 
-import { i18nextServer } from "~/integrations/i18n";
+import { i18nextServer } from "~/integrations/i18n/i18next.server";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getBrowserEnv } from "./utils/env";
 
 export const links: LinksFunction = () => [
@@ -26,20 +13,25 @@ export const links: LinksFunction = () => [
 ];
 
 export const meta: MetaFunction = () => [
-	{ title: "Remix Notes" },
-	{ name: "description", content: "Remix Notes App" },
+	{ title: "React Router Notes" },
+	{ name: "description", content: "React Router Notes App" },
 ];
+
+type LoaderData = {
+	locale: string;
+	env: ReturnType<typeof getBrowserEnv>;
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
 	const locale = await i18nextServer.getLocale(request);
-	return json({
+	return {
 		locale,
 		env: getBrowserEnv(),
-	});
+	};
 };
 
 export default function App() {
-	const { env, locale } = useLoaderData<typeof loader>();
+	const { env, locale } = useLoaderData<LoaderData>();
 	const { i18n } = useTranslation();
 
 	useChangeLanguage(locale);
@@ -64,7 +56,6 @@ export default function App() {
 					}}
 				/>
 				<Scripts />
-				<LiveReload />
 			</body>
 		</html>
 	);

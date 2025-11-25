@@ -1,0 +1,13 @@
+/node_modules
+*.log
+.DS_Store
+/.cache
+/tests
+/app/database/migrations
+/app/database/seed.server.ts
+.env.example
+README.md
+vitest.config.ts
+.eslintrc.js
+.prettierrc
+tsconfig.json

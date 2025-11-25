@@ -1,14 +1,13 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import type { LoaderFunctionArgs } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
-import { getAuthSession } from "~/modules/auth";
+import { getAuthSession } from "~/modules/auth/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const { email } = (await getAuthSession(request)) || {};
 
-	return json({ email });
+	return { email };
 }
 
 export default function Index() {
@@ -17,13 +16,13 @@ export default function Index() {
 	return (
 		<main className="relative min-h-screen bg-black sm:flex sm:items-center sm:justify-center">
 			<div className="relative sm:pb-16 sm:pt-8">
-				<div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+				<div className="mx-auto sm:px-6 lg:px-8">
 					<div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
 						<div className="absolute inset-0">
 							<img
-								className="h-full w-full object-cover"
-								src="https://user-images.githubusercontent.com/1500684/157774694-99820c51-8165-4908-a031-34fc371ac0d6.jpg"
-								alt="Sonic Youth On Stage"
+								className="size-full object-cover"
+								src="/licensed-image.jpeg"
+								alt="Background"
 							/>
 							<div className="absolute inset-0 bg-[color:rgba(254,204,27,0.5)] mix-blend-multiply" />
 						</div>
@@ -33,7 +32,7 @@ export default function Index() {
 									Supa
 								</span>
 								<span className="uppercase text-purple-500 drop-shadow-md">
-									Fly
+									Vercel
 								</span>
 								<span className="uppercase text-yellow-500 drop-shadow-md">
 									Stack
@@ -76,11 +75,11 @@ export default function Index() {
 									</div>
 								)}
 							</div>
-							<a href="https://remix.run">
+							<a href="https://reactrouter.com">
 								<img
-									src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-									alt="Remix"
-									className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
+									src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Lockup/Dark.svg"
+									alt="React Router"
+									className="mx-auto mt-16 w-full max-w-48 md:max-w-64"
 								/>
 							</a>
 						</div>
@@ -96,9 +95,9 @@ export default function Index() {
 								href: "https://supabase.com",
 							},
 							{
-								src: "https://fly.io/public/images/brand/logo-light.svg",
-								alt: "Fly.io",
-								href: "https://fly.io",
+								src: "https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png",
+								alt: "Vercel",
+								href: "https://vercel.com",
 							},
 							{
 								src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
@@ -106,19 +105,19 @@ export default function Index() {
 								href: "https://prisma.io",
 							},
 							{
-								src: "https://tailwindcss.com/_next/static/media/tailwindcss-logotype-white.e0b2bd6155fa0bed8e24ff6b28f4a911.svg",
+								src: "https://tailwindcss.com/_next/static/media/tailwindcss-mark.d52e9897.svg",
 								alt: "Tailwind",
 								href: "https://tailwindcss.com",
 							},
 							{
-								src: "https://github.com/colinhacks/zod/raw/master/logo.svg",
+								src: "https://raw.githubusercontent.com/colinhacks/zod/HEAD/logo.svg",
 								alt: "Zod",
 								href: "https://github.com/colinhacks/zod",
 							},
 							{
-								src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",
-								alt: "Cypress",
-								href: "https://www.cypress.io",
+								src: "https://playwright.dev/img/playwright-logo.svg",
+								alt: "Playwright",
+								href: "https://playwright.dev",
 							},
 							{
 								src: "https://user-images.githubusercontent.com/1500684/157772386-75444196-0604-4340-af28-53b236faa182.svg",

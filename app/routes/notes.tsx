@@ -1,9 +1,9 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useLoaderData, Outlet, Link, NavLink } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { useLoaderData, Outlet, Link, NavLink } from "react-router";
 
-import { LogoutButton, requireAuthSession } from "~/modules/auth";
-import { getNotes } from "~/modules/note";
+import { LogoutButton } from "~/modules/auth/components/logout-button";
+import { requireAuthSession } from "~/modules/auth/session.server";
+import { getNotes } from "~/modules/note/service.server";
 import { notFound } from "~/utils/http.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -15,7 +15,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		throw notFound(`No user with id ${userId}`);
 	}
 
-	return json({ email, notes });
+	return { email, notes };
 }
 
 export default function NotesPage() {

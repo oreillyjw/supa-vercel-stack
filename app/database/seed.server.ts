@@ -2,9 +2,9 @@
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 
-import { SUPABASE_SERVICE_ROLE, SUPABASE_URL } from "../utils/env";
+import { SUPABASE_SERVICE_ROLE_KEY, SUPABASE_URL } from "../utils/env";
 
-const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
+const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 	auth: {
 		autoRefreshToken: false,
 		persistSession: false,

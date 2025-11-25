@@ -1,13 +1,12 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import { createCookieSessionStorage, redirect } from "react-router";
 
+import { NODE_ENV, SUPABASE_JWT_SECRET } from "~/utils/env";
 import {
 	getCurrentPath,
 	isGet,
 	makeRedirectToFromHere,
-	NODE_ENV,
 	safeRedirect,
-	SESSION_SECRET,
-} from "~/utils";
+} from "~/utils/http.server";
 
 import { refreshAccessToken, verifyAuthSession } from "./service.server";
 import type { AuthSession } from "./types";
@@ -28,7 +27,7 @@ const sessionStorage = createCookieSessionStorage({
 		httpOnly: true,
 		path: "/",
 		sameSite: "lax",
-		secrets: [SESSION_SECRET],
+		secrets: [SUPABASE_JWT_SECRET],
 		secure: NODE_ENV === "production",
 	},
 });
