@@ -1,6 +1,5 @@
 import { http } from "msw";
-
-const { USER_EMAIL, USER_ID, USER_PASSWORD } = require("./user");
+import { USER_EMAIL, USER_ID, USER_PASSWORD } from "./user.js";
 
 const supabaseAuthSession = {
 	user: { id: USER_ID, email: USER_EMAIL },
@@ -76,7 +75,7 @@ const handlers = [
 	),
 ];
 
-module.exports = {
+export {
 	handlers,
 	SUPABASE_URL,
 	SUPABASE_AUTH_TOKEN_API,

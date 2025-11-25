@@ -69,9 +69,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			"~": path.resolve(__dirname, "./app"),
-			"~/integrations/supabase/client": path.resolve(__dirname, "./app/integrations/supabase/client.ts"),
-		},
-		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+			"~": path.resolve(__dirname, "./app")
+		}
 	},
 });
