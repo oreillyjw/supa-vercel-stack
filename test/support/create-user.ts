@@ -42,6 +42,6 @@ export async function createAccount(email: string, password: string) {
 }
 
 // Allow script execution
-if (require.main === module) {
-	createAccount(process.argv[2], process.argv[3]);
-}
+// if (require.main === module) {
+// 	createAccount(process.argv[2], process.argv[3]);
+// }

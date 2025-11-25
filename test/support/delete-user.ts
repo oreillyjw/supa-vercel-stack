@@ -51,6 +51,6 @@ export async function deleteUser(email: string) {
 }
 
 // Allow script execution
-if (require.main === module) {
-	deleteUser(process.argv[2]);
-}
+// if (require.main === module) {
+// 	deleteUser(process.argv[2]);
+// }
