@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "vercel-build": "prisma generate && vite build",
+    "build": "react-router build",
+    "vercel-build": "prisma generate && react-router build",
     "db:prepare-migration": "prisma migrate dev --create-only --skip-seed",
     "db:deploy-migration": "prisma migrate deploy",
     "dev": "vite dev",
