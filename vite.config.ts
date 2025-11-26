@@ -72,11 +72,6 @@ export default defineConfig({
 			target: "esnext",
 		},
 	},
-	define: {
-		"process.env.SERVER_URL": JSON.stringify(
-			process.env.SERVER_URL || process.env.VERCEL_URL,
-		)
-	},
 	resolve: {
 		alias: {
 			"~": path.resolve(__dirname, "./app"),

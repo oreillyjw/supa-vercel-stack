@@ -14,7 +14,8 @@ declare global {
 		interface ProcessEnv {
 			SUPABASE_URL: string;
 			SUPABASE_SERVICE_ROLE_KEY: string;
-			SERVER_URL: string;
+			VERCEL_URL?: string;
+			SERVER_URL?: string;
 			SUPABASE_ANON_KEY: string;
 			SUPABASE_JWT_SECRET: string;
 		}
@@ -45,7 +46,12 @@ function getEnv(
 /**
  * Server env
  */
-export const SERVER_URL = getEnv("SERVER_URL");
+// Use VERCEL_URL on Vercel (add https://), fallback to SERVER_URL for local dev
+const vercelUrl = getEnv("VERCEL_URL", { isRequired: false });
+export const SERVER_URL = vercelUrl
+	? `https://${vercelUrl}`
+	: getEnv("SERVER_URL", { isRequired: false }) || "http://localhost:3000";
+
 export const SUPABASE_SERVICE_ROLE_KEY = getEnv("SUPABASE_SERVICE_ROLE_KEY");
 export const SUPABASE_JWT_SECRET = getEnv("SUPABASE_JWT_SECRET");
 
