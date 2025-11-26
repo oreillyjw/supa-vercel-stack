@@ -52,20 +52,22 @@ export default defineConfig({
 		},
 	},
 	ssr: {
-		noExternal: ["remix-i18next/react", "@supabase/supabase-js"],
+		noExternal: [
+			"remix-i18next/react",
+			"@supabase/supabase-js",
+			"react-router",
+			"@react-router/node",
+		],
 	},
 	optimizeDeps: {
 		exclude: ["i18next-fs-backend"],
 		include: [
 			"remix-i18next/react",
-			"react",
-			"react-dom",
 			"react-i18next",
 			"@supabase/supabase-js",
 			"@supabase/postgrest-js",
 			"tailwind-merge",
 		],
-		force: true,
 		esbuildOptions: {
 			target: "esnext",
 		},
