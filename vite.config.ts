@@ -35,7 +35,10 @@ export default defineConfig({
 			resolveId(source) {
 				// Handle the supabase client specifically to ensure .ts extension is found
 				if (source === "~/integrations/supabase/client") {
-					return path.resolve(__dirname, "./app/integrations/supabase/client.ts");
+					return path.resolve(
+						__dirname,
+						"./app/integrations/supabase/client.ts",
+					);
 				}
 				return null;
 			},
@@ -67,9 +70,14 @@ export default defineConfig({
 			target: "esnext",
 		},
 	},
+	define: {
+		"process.env.SERVER_URL": JSON.stringify(
+			process.env.SERVER_URL || process.env.VERCEL_URL,
+		)
+	},
 	resolve: {
 		alias: {
-			"~": path.resolve(__dirname, "./app")
-		}
+			"~": path.resolve(__dirname, "./app"),
+		},
 	},
 });
