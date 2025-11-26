@@ -35,7 +35,10 @@ export default defineConfig({
 			resolveId(source) {
 				// Handle the supabase client specifically to ensure .ts extension is found
 				if (source === "~/integrations/supabase/client") {
-					return path.resolve(__dirname, "./app/integrations/supabase/client.ts");
+					return path.resolve(
+						__dirname,
+						"./app/integrations/supabase/client.ts",
+					);
 				}
 				return null;
 			},
@@ -49,27 +52,34 @@ export default defineConfig({
 		},
 	},
 	ssr: {
-		noExternal: ["remix-i18next/react", "@supabase/supabase-js"],
+		noExternal: [
+			"remix-i18next/react",
+			"@supabase/supabase-js",
+			"react-router",
+			"@react-router/node",
+		],
 	},
 	optimizeDeps: {
 		exclude: ["i18next-fs-backend"],
 		include: [
 			"remix-i18next/react",
-			"react",
-			"react-dom",
 			"react-i18next",
 			"@supabase/supabase-js",
 			"@supabase/postgrest-js",
 			"tailwind-merge",
 		],
-		force: true,
 		esbuildOptions: {
 			target: "esnext",
 		},
 	},
+	define: {
+		"process.env.SERVER_URL": JSON.stringify(
+			process.env.SERVER_URL || process.env.VERCEL_URL,
+		)
+	},
 	resolve: {
 		alias: {
-			"~": path.resolve(__dirname, "./app")
-		}
+			"~": path.resolve(__dirname, "./app"),
+		},
 	},
 });
