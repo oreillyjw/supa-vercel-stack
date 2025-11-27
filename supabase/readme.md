@@ -3,9 +3,11 @@ This is to run Supabase locally.
 > Doc: https://supabase.com/docs/guides/cli/local-development
 
 ### Start Supabase services
+
 ```bash
 supabase start
 ```
+
 Once all of the Supabase services are running, you'll see output containing your local Supabase credentials.
 It should look like this, with urls and keys that you'll use in the project:
 
@@ -25,10 +27,11 @@ service_role key: eyJhbGci....
 ### Copy the `.env.example` file to `.env`
 
 In your `.env` file, set the following environment variables (from the output above):
-- `DATABASE_URL` ➡️ `DB URL`
-- `SUPABASE_ANON_PUBLIC` ➡️ `anon key`
-  > [This public sharable key is used in combination with RLS.](https://supabase.com/docs/guides/api/api-keys#the-anon-key)
-- `SUPABASE_SERVICE_ROLE` ➡️ `service_role key`
-  > [This private secret key bypass RLS](https://supabase.com/docs/guides/api/api-keys#the-servicerole-key)
-- `SUPABASE_URL` ➡️ `API URL`
-  > Used by Supabase SDK.
+
+-   `DATABASE_URL` ➡️ `DB URL`
+-   `SUPABASE_ANON_PUBLIC` ➡️ `anon key`
+    > [This public sharable key is used in combination with RLS.](https://supabase.com/docs/guides/api/api-keys#the-anon-key)
+-   `SUPABASE_SERVICE_ROLE` ➡️ `service_role key`
+    > [This private secret key bypass RLS](https://supabase.com/docs/guides/api/api-keys#the-servicerole-key)
+-   `SUPABASE_URL` ➡️ `API URL`
+    > Used by Supabase SDK.
