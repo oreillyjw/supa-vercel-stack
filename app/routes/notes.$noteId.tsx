@@ -1,7 +1,10 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { redirect , Form, useLoaderData, useRouteError } from "react-router";
+import { redirect, Form, useLoaderData, useRouteError } from "react-router";
 
-import { requireAuthSession, commitAuthSession } from "~/modules/auth/session.server";
+import {
+	requireAuthSession,
+	commitAuthSession,
+} from "~/modules/auth/session.server";
 import { deleteNote, getNote } from "~/modules/note/service.server";
 import { assertIsDelete, getRequiredParam } from "~/utils/http.server";
 
@@ -57,5 +60,3 @@ export function ErrorBoundary() {
 
 	return <div>{JSON.stringify(error, null, 2)}</div>;
 }
-
-

@@ -45,7 +45,8 @@ export async function deleteUser(email: string) {
 			}
 		}
 	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
+		const errorMessage =
+			error instanceof Error ? error.message : String(error);
 		throw new Error(`Failed to delete test user ${email}: ${errorMessage}`);
 	}
 }

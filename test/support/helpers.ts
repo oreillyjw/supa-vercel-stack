@@ -102,10 +102,15 @@ export async function getNoteFromList(
 	// Note links have format "📝 {title}" in the UI
 	// Escape special regex characters in the title
 	const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	return page.getByRole("link", { name: new RegExp(`📝\\s*${escapedTitle}`, "i") });
+	return page.getByRole("link", {
+		name: new RegExp(`📝\\s*${escapedTitle}`, "i"),
+	});
 }
 
-export async function clickNoteInList(page: Page, title: string): Promise<void> {
+export async function clickNoteInList(
+	page: Page,
+	title: string,
+): Promise<void> {
 	const noteLink = await getNoteFromList(page, title);
 	await noteLink.click();
 	await page.waitForURL(/\/notes\/.+/);
@@ -147,8 +152,15 @@ export async function expectNoteInList(page: Page, title: string) {
 	await page.waitForLoadState("networkidle");
 	// Wait for either the empty state OR the notes list to be visible
 	await Promise.race([
-		page.getByText("No notes yet").waitFor({ state: "visible" }).catch(() => {}),
-		page.locator("ol").first().waitFor({ state: "visible" }).catch(() => {}),
+		page
+			.getByText("No notes yet")
+			.waitFor({ state: "visible" })
+			.catch(() => {}),
+		page
+			.locator("ol")
+			.first()
+			.waitFor({ state: "visible" })
+			.catch(() => {}),
 	]);
 	const noteLink = await getNoteFromList(page, title);
 	await expect(noteLink).toBeVisible();

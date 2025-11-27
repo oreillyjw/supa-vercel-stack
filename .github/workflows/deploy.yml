@@ -164,7 +164,6 @@ jobs:
                   SERVER_URL: ${{ secrets.CI_SERVER_URL }}
                   POSTGRES_PRISMA_URL: ${{ secrets.CI_POSTGRES_PRISMA_URL }}
 
-
             - name: 🎭 Install Playwright Browsers
               run: npx playwright install --with-deps chromium
 
@@ -209,4 +208,4 @@ jobs:
                   vercel-token: ${{ secrets.VERCEL_TOKEN }}
                   vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
                   vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-                  vercel-args: '--prod'
+                  vercel-args: "--prod"

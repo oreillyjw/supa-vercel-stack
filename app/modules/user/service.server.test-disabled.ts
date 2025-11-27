@@ -5,7 +5,6 @@
 // With MSW 2.0, API has changed (for the better) and the tests need to be updated
 // I have not had the time to do it yet, so I'm disabling the tests for now
 
-
 // import { matchRequestUrl } from "msw";
 
 // import { server } from "mocks";

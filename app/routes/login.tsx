@@ -1,15 +1,30 @@
 import * as React from "react";
 
 import { useTranslation } from "react-i18next";
-import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "react-router";
-import { data, redirect , Form, Link, useActionData, useNavigation, useSearchParams } from "react-router";
+import type {
+	ActionFunctionArgs,
+	LoaderFunctionArgs,
+	MetaFunction,
+} from "react-router";
+import {
+	data,
+	redirect,
+	Form,
+	Link,
+	useActionData,
+	useNavigation,
+	useSearchParams,
+} from "react-router";
 import { parseFormAny, useZorm } from "react-zorm";
 import { z } from "zod";
 
 import { i18nextServer } from "~/integrations/i18n/i18next.server";
 import { ContinueWithEmailForm } from "~/modules/auth/components/continue-with-email-form";
 import { signInWithEmail } from "~/modules/auth/service.server";
-import { createAuthSession, getAuthSession } from "~/modules/auth/session.server";
+import {
+	createAuthSession,
+	getAuthSession,
+} from "~/modules/auth/session.server";
 import { isFormProcessing } from "~/utils/form";
 import { assertIsPost } from "~/utils/http.server";
 
@@ -103,12 +118,18 @@ export default function LoginPage() {
 								className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
 								disabled={disabled}
 							/>
-							{(zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)) && (
+							{(zo.errors.email()?.message ||
+								(actionData?.errors &&
+									"email" in actionData.errors &&
+									actionData.errors.email)) && (
 								<div
 									className="pt-1 text-red-700"
 									id="email-error"
 								>
-									{zo.errors.email()?.message || (actionData?.errors && "email" in actionData.errors && actionData.errors.email)}
+									{zo.errors.email()?.message ||
+										(actionData?.errors &&
+											"email" in actionData.errors &&
+											actionData.errors.email)}
 								</div>
 							)}
 						</div>

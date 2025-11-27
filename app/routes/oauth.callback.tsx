@@ -1,15 +1,24 @@
 import { useEffect, useRef } from "react";
 
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "react-router";
-import { data, redirect, useActionData, useFetcher, useSearchParams } from "react-router";
+import {
+	data,
+	redirect,
+	useActionData,
+	useFetcher,
+	useSearchParams,
+} from "react-router";
 import { parseFormAny } from "react-zorm";
 import { z } from "zod";
 
 import { supabaseClient } from "~/integrations/supabase/client";
 import { refreshAccessToken } from "~/modules/auth/service.server";
-import { commitAuthSession, getAuthSession } from "~/modules/auth/session.server";
+import {
+	commitAuthSession,
+	getAuthSession,
+} from "~/modules/auth/session.server";
 import { tryCreateUser, getUserByEmail } from "~/modules/user/service.server";
-import { safeRedirect , assertIsPost } from "~/utils/http.server";
+import { safeRedirect, assertIsPost } from "~/utils/http.server";
 
 // imagine a user go back after OAuth login success or type this URL
 // we don't want him to fall in a black hole 👽

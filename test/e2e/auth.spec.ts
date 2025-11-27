@@ -23,7 +23,9 @@ test.describe("Email/Password Authentication", () => {
 		test("should register new account with valid credentials", async ({
 			page,
 		}) => {
-			const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+			const email = faker.internet
+				.email({ provider: "example.com" })
+				.toLowerCase();
 			const password = faker.internet.password({ length: 12 });
 
 			await registerUser(page, email, password);
@@ -50,7 +52,9 @@ test.describe("Email/Password Authentication", () => {
 		});
 
 		test("should show error for weak password", async ({ page }) => {
-			const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+			const email = faker.internet
+				.email({ provider: "example.com" })
+				.toLowerCase();
 			const weakPassword = "short"; // Less than 8 characters
 
 			await goToJoin(page);
@@ -64,11 +68,16 @@ test.describe("Email/Password Authentication", () => {
 			await expectToBeOnJoinPage(page);
 		});
 
-		test("should show error for duplicate email", async ({ page, user }) => {
+		test("should show error for duplicate email", async ({
+			page,
+			user,
+		}) => {
 			// user fixture creates a user, now try to register with same email
 			await goToJoin(page);
 			await page.getByTestId("email").fill(user.email);
-			await page.getByTestId("password").fill(faker.internet.password({ length: 12 }));
+			await page
+				.getByTestId("password")
+				.fill(faker.internet.password({ length: 12 }));
 			await page.getByTestId("create-account").click();
 
 			// Should show email error (user already exists)
@@ -80,7 +89,9 @@ test.describe("Email/Password Authentication", () => {
 		test("should redirect to notes after successful registration", async ({
 			page,
 		}) => {
-			const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+			const email = faker.internet
+				.email({ provider: "example.com" })
+				.toLowerCase();
 			const password = faker.internet.password({ length: 12 });
 
 			await registerUser(page, email, password);
@@ -128,7 +139,9 @@ test.describe("Email/Password Authentication", () => {
 		});
 
 		test("should show error for non-existent account", async ({ page }) => {
-			const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+			const email = faker.internet
+				.email({ provider: "example.com" })
+				.toLowerCase();
 			const password = faker.internet.password({ length: 12 });
 
 			await goToLogin(page);
@@ -176,7 +189,10 @@ test.describe("Email/Password Authentication", () => {
 			await page.waitForURL(/\/login/);
 		});
 
-		test("should show login button after logout", async ({ page, user }) => {
+		test("should show login button after logout", async ({
+			page,
+			user,
+		}) => {
 			// Login first
 			await loginUser(page, user.email, user.password);
 
@@ -190,8 +206,12 @@ test.describe("Email/Password Authentication", () => {
 });
 
 test.describe("Magic Link Authentication", () => {
-	test("should accept valid email for magic link request", async ({ page }) => {
-		const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+	test("should accept valid email for magic link request", async ({
+		page,
+	}) => {
+		const email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 
 		await page.goto("/login");
 
@@ -266,7 +286,9 @@ test.describe("Password Reset Flow", () => {
 	test("should show success message even for non-existent email", async ({
 		page,
 	}) => {
-		const email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+		const email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 
 		await page.goto("/forgot-password");
 		await page.getByTestId("email").fill(email);
@@ -278,7 +300,10 @@ test.describe("Password Reset Flow", () => {
 });
 
 test.describe("Session Management", () => {
-	test("should persist session across page reload", async ({ page, user }) => {
+	test("should persist session across page reload", async ({
+		page,
+		user,
+	}) => {
 		// Login
 		await loginUser(page, user.email, user.password);
 		await expectToBeOnNotesPage(page);

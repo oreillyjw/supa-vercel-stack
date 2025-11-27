@@ -19,7 +19,8 @@ export async function getUserId(email: string): Promise<string> {
 
 		return user.id;
 	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
+		const errorMessage =
+			error instanceof Error ? error.message : String(error);
 		throw new Error(`Failed to get user ID for ${email}: ${errorMessage}`);
 	}
 }
