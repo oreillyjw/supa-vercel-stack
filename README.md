@@ -1,67 +1,76 @@
-# Remix Supa Fly Stack
+# React Router v7 Supa Vercel Stack
 
-> This Readme will be re-written soon
+![React Router v7 Supa Vercel Stack](https://github.com/oreillyjw/supa-vercel-stack/blob/main/public/built-site-image.jpeg?raw=true)
 
-![The Remix Indie Stack](https://user-images.githubusercontent.com/20722140/183644602-4913ad6d-aee1-4233-ba49-71716099a4df.png)
+A modern full-stack starter template built with React Router v7, Supabase, and Vercel.
 
-Learn more about [Remix Stacks](https://remix.run/stacks).
-
-```
-npx create-remix --template rphlmr/supa-fly-stack
+```bash
+npx create-react-router@latest --template oreillyjw/supa-vercel-stack
 ```
 
 ## What's in the stack
 
--   [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
+-   [Vercel deployment](https://vercel.com) with zero-config setup
 -   Production-ready [Supabase Database](https://supabase.com/)
--   Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
--   [GitHub Actions](https://github.com/features/actions) to deploy on merge to production and staging environments
--   Email/Password Authentication / Magic Link, with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
+-   Email/Password Authentication / Magic Link, with cookie-based sessions
 -   Database ORM with [Prisma](https://prisma.io)
--   Forms Schema (client and server sides !) validation with [Remix Params Helper](https://github.com/kiliman/remix-params-helper)
--   Styling with [Tailwind](https://tailwindcss.com/)
--   End-to-end testing with [Cypress](https://cypress.io)
--   Local third party request mocking with [MSW](https://mswjs.io)
+-   Styling with [Tailwind CSS](https://tailwindcss.com/)
+-   End-to-end testing with [Playwright](https://playwright.dev)
 -   Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 -   Code formatting with [Prettier](https://prettier.io)
 -   Linting with [ESLint](https://eslint.org)
 -   Static Types with [TypeScript](https://typescriptlang.org)
+-   Internationalization with [remix-i18next](https://github.com/sergiodxa/remix-i18next)
 
-Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
+Not a fan of bits of the stack? Fork it, change it, and use `npx create-react-router --template your/repo`! Make it your own.
 
-## Development
+## Prerequisites
+
+-   **Node.js 22.x** (required by Vercel as of November 2025)
+-   [Vercel account](https://vercel.com/signup)
+-   [Supabase account](https://supabase.com/) (free tier available)
+
+## Quick Start
+
+### 1. Set Up Supabase
 
 -   Create a [Supabase Database](https://supabase.com/) (free tier gives you 2 databases)
 
-    > **Note:** Only one for playing around with Supabase or 2 for `staging` and `production`
+    > **Note:** You can create one database for development/production, or two separate databases for `staging` and `production`
 
-    > **Note:** Used all your free tiers ? Also works with [Supabase CLI](https://github.com/supabase/cli) and local self-hosting
+    > **Note:** Used all your free tiers? Also works with [Supabase CLI](https://github.com/supabase/cli) and local self-hosting
 
-    > **Note:** Create a strong database password, but prefer a passphrase, it'll be more easy to use in connection string (no need to escape special char)
+    > **Note:** Create a strong database password, but prefer a passphrase - it'll be easier to use in connection strings (no need to escape special characters)
     >
-    > _example : my_strong_passphrase_
+    > _Example: my_strong_passphrase_
 
--   Go to https://app.supabase.io/project/{PROJECT}/settings/api to find your secrets
--   "Project API keys"
--   Add your `SUPABASE_URL`, `SERVER_URL`, `SUPABASE_SERVICE_ROLE` (aka `service_role` `secret`), `SUPABASE_ANON_PUBLIC` (aka `anon` `public`) and `DATABASE_URL` in the `.env` file
-    > **Note:** `SERVER_URL` is your localhost on dev. It'll work for magic link login
+-   Go to https://app.supabase.io/project/{PROJECT}/settings/api to find your secrets:
 
-```en
-DATABASE_URL="postgres://postgres:{STAGING_POSTGRES_PASSWORD}@db.{STAGING_YOUR_INSTANCE_NAME}.supabase.co:5432/postgres"
-SUPABASE_ANON_PUBLIC="{ANON_PUBLIC}"
-SUPABASE_SERVICE_ROLE="{SERVICE_ROLE}"
-SUPABASE_URL="https://{STAGING_YOUR_INSTANCE_NAME}.supabase.co"
-SESSION_SECRET="super-duper-s3cret"
+    -   Project URL (`SUPABASE_URL`)
+    -   Project API keys:
+        -   `anon` `public` key → `SUPABASE_ANON_PUBLIC`
+        -   `service_role` `secret` key → `SUPABASE_SERVICE_ROLE`
+
+-   Get your database connection string from Settings → Database → Connection String (URI format)
+
+### 2. Local Development Setup
+
+-   Clone this repository
+
+-   Copy `.env.example` to `.env` and add your Supabase credentials:
+
+```env
+DATABASE_URL="postgres://postgres:{YOUR_PASSWORD}@db.{YOUR_INSTANCE_NAME}.supabase.co:5432/postgres"
+SUPABASE_URL="https://{YOUR_INSTANCE_NAME}.supabase.co"
+SUPABASE_ANON_KEY="{ANON_PUBLIC}"
+SUPABASE_SERVICE_ROLE_KEY="{SERVICE_ROLE}"
+SUPABASE_JWT_SECRET="super-duper-s3cret"
 SERVER_URL="http://localhost:3000"
 ```
 
--   This step only applies if you've opted out of having the CLI install dependencies for you:
+> **Note:** Generate a secure `SUPABASE_JWT_SECRET` using `openssl rand -hex 32` or a password generator
 
-    ```sh
-    npx remix init
-    ```
-
--   Initial setup:
+-   Initial setup (installs dependencies and sets up database):
 
     ```sh
     npm run setup
@@ -73,185 +82,283 @@ SERVER_URL="http://localhost:3000"
     npm run dev
     ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+This starts your app in development mode at http://localhost:3000, rebuilding assets on file changes.
 
-The database seed script creates a new user with some data you can use to get started:
+The database seed script creates a test user:
 
 -   Email: `hello@supabase.com`
 -   Password: `supabase`
 
-### Relevant code:
+### 3. Configure Supabase Authentication URLs
 
-This is a pretty simple note-taking app, but it's a good example of how you can build a full-stack app with Prisma, Supabase, and Remix. The main functionality is creating users, logging in and out (handling access and refresh tokens + refresh on expiration), and creating and deleting notes.
+For magic link login and password reset to work, add these redirect URLs in your Supabase project:
 
--   auth / session [./app/modules/auth](./app/modules/auth)
--   creating, and deleting notes [./app/modules/note](./app/modules/note)
+Go to Authentication → URL Configuration and add:
+
+**For local development:**
+
+-   `http://localhost:3000/oauth/callback`
+-   `http://localhost:3000/reset-password`
+
+**For production:**
+
+-   `https://your-app.vercel.app/oauth/callback`
+-   `https://your-app.vercel.app/reset-password`
 
 ## Deployment
 
-> Do what you know if you are a Fly.io expert.
+### Deploy to Vercel
 
-This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/oreillyjw/supa-vercel-stack)
 
-Prior to your first deployment, you'll need to do a few things:
+### Manual Deployment Steps
 
--   [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
+1. **Fork or clone this repository**
 
--   Sign up and log in to Fly
+2. **Create a new Vercel project**
 
-    ```sh
-    fly auth signup
-    ```
+    - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+    - Click "Add New Project"
+    - Import your Git repository
 
-    > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
+3. **Configure Environment Variables**
 
--   Create two apps on Fly, one for staging and one for production:
+    **Option A: Use Supabase Integration (Recommended)**
 
-    ```sh
-    fly apps create supa-fly-stack-template
-    fly apps create supa-fly-stack-template-staging  # ** not mandatory if you don't want a staging environnement **
-    ```
+    The easiest way to connect Supabase to Vercel:
 
-    > **Note:** For production app, make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
+    - Install the [Supabase Integration](https://vercel.com/marketplace/supabase) from Vercel Marketplace
+    - This automatically configures `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`
+    - You only need to manually add:
+        ```
+        DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
+        SUPABASE_JWT_SECRET={GENERATE_WITH_openssl_rand_-hex_32}
+        SERVER_URL=https://your-app.vercel.app
+        ```
 
-    -   Initialize Git.
+    **Option B: Manual Configuration**
 
-    ```sh
-    git init
-    ```
-
--   Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
-
-    ```sh
-    git remote add origin <ORIGIN_URL>
-    ```
-
--   Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
-
--   Add a `SESSION_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE`,`SUPABASE_ANON_PUBLIC`, `SERVER_URL` and `DATABASE_URL` to your fly app secrets
-
-    > **Note:** To find your `SERVER_URL`, go to [your fly.io dashboard](https://fly.io/apps/supa-fly-stack-template-3a36)
-
-    To do this you can run the following commands:
-
-    ```sh
-    # production (--app name is resolved from fly.toml)
-    fly secrets set SESSION_SECRET=$(openssl rand -hex 32)
-    fly secrets set SUPABASE_URL="https://{YOUR_INSTANCE_NAME}.supabase.co"
-    fly secrets set SUPABASE_SERVICE_ROLE="{SUPABASE_SERVICE_ROLE}"
-    fly secrets set SUPABASE_ANON_PUBLIC="{SUPABASE_ANON_PUBLIC}"
-    fly secrets set DATABASE_URL="postgres://postgres:{POSTGRES_PASSWORD}@db.{YOUR_INSTANCE_NAME}.supabase.co:5432/postgres"
-    fly secrets set SERVER_URL="https://{YOUR_STAGING_SERVEUR_URL}"
-
-    # staging (specify --app name) ** not mandatory if you don't want a staging environnement **
-    fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app supa-fly-stack-template-staging
-    fly secrets set SUPABASE_URL="https://{YOUR_STAGING_INSTANCE_NAME}.supabase.co" --app supa-fly-stack-template-staging
-    fly secrets set SUPABASE_SERVICE_ROLE="{STAGING_SUPABASE_SERVICE_ROLE}" --app supa-fly-stack-template-staging
-    fly secrets set SUPABASE_ANON_PUBLIC="{STAGING_SUPABASE_ANON_PUBLIC}" --app supa-fly-stack-template-staging
-    fly secrets set DATABASE_URL="postgres://postgres:{STAGING_POSTGRES_PASSWORD}@db.{STAGING_YOUR_INSTANCE_NAME}.supabase.co:5432/postgres" --app supa-fly-stack-template-staging
-    fly secrets set SERVER_URL="https://{YOUR_STAGING_SERVEUR_URL}" --app supa-fly-stack-template-staging
+    Alternatively, add all environment variables manually in Vercel project settings:
 
     ```
+    DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
+    SUPABASE_URL=https://{YOUR_INSTANCE_NAME}.supabase.co
+    SUPABASE_ANON_KEY={ANON_PUBLIC_KEY}
+    SUPABASE_SERVICE_ROLE_KEY={SERVICE_ROLE_KEY}
+    SUPABASE_JWT_SECRET={GENERATE_WITH_openssl_rand_-hex_32}
+    SERVER_URL=https://your-app.vercel.app
+    ```
 
-    If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
+    > **Important:** Set `SERVER_URL` to your actual Vercel deployment URL (e.g., `https://your-app.vercel.app`)
 
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+4. **Deploy**
 
-> **Note:** To deploy manually, just run `fly deploy` (It'll deploy app defined in fly.toml)
+    - Click "Deploy"
+    - Vercel will automatically build and deploy your app
 
-## GitHub Actions
+5. **Update Supabase redirect URLs**
+    - Add your Vercel URL to Supabase Authentication → URL Configuration (see step 3 above)
 
-> DISCLAIMER : Github actions ==> I'm not an expert about that. Read carefully before using it
+### Deployment Tips
 
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+-   **Automatic Deployments**: Every push to your main branch triggers a production deployment
+-   **Preview Deployments**: Pull requests automatically get preview URLs
+-   **Environment Variables**: Set different values for Preview vs Production in Vercel settings
+-   **Custom Domains**: Add custom domains in Vercel project settings
 
-👉 **You have to add some env secrets for cypress.** 👈
+## Development
 
-Add a `SESSION_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE`,`SUPABASE_ANON_PUBLIC`, `SERVER_URL` and `DATABASE_URL` to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+### Available Commands
+
+```bash
+# Development
+npm run dev                    # Start development server
+npm run build                  # Build for production
+npm run start                  # Start production server
+
+# Database
+npm run db:reset               # Reset database and seed with test data
+npm run db:seed                # Seed database with test data
+npm run db:prepare-migration   # Create new Prisma migration
+npm run db:deploy-migration    # Apply migrations to database
+
+# Testing
+npm test                       # Run Vitest unit tests
+npm run test:e2e:dev           # Run Playwright tests in UI mode
+npm run test:e2e:run           # Run Playwright tests headlessly
+npm run validate               # Run all checks (tests, lint, typecheck, e2e)
+
+# Code Quality
+npm run typecheck              # TypeScript type checking
+npm run lint                   # ESLint
+npm run format                 # Format with Prettier
+```
+
+### Relevant Code
+
+This is a note-taking app demonstrating React Router v7 + Supabase patterns:
+
+-   **Authentication & Sessions**: [./app/modules/auth](./app/modules/auth)
+
+    -   Email/password and magic link authentication
+    -   Cookie-based session management
+    -   Automatic token refresh
+
+-   **CRUD Operations**: [./app/modules/note](./app/modules/note)
+
+    -   Creating, reading, updating, and deleting notes
+    -   User-scoped data access
+
+-   **User Management**: [./app/modules/user](./app/modules/user)
+    -   User service layer
+
+## Working with the Database
+
+This project uses **Supabase migrations** (SQL files) as the source of truth for database schema. Prisma pulls the schema from Supabase and is used only as an ORM for type-safe queries.
+
+### Database Schema Changes
+
+To make changes to your database schema:
+
+1. **Create a new Supabase migration**:
+
+    ```sh
+    supabase migration new your_migration_name
+    ```
+
+2. **Write your SQL migration** in the generated file at `supabase/migrations/TIMESTAMP_your_migration_name.sql`
+
+3. **Apply the migration and update Prisma**:
+
+    ```sh
+    npm run db:reset
+    ```
+
+    This command:
+
+    - Runs `supabase db reset` to apply migrations to your local database
+    - Runs `prisma db pull` to sync the Prisma schema from the database
+    - Runs `prisma generate` to update the Prisma client
+    - Seeds the database with test data
+
+4. **For production**, push migrations to your Supabase project:
+
+    ```sh
+    supabase db push
+    ```
+
+### Important Notes
+
+-   **Supabase migrations** (SQL files in `supabase/migrations/`) are the source of truth
+-   **Prisma schema** (`app/database/schema.prisma`) is auto-generated from the database via `prisma db pull`
+-   Don't manually edit the Prisma schema - changes will be overwritten when pulling from Supabase
+-   The npm scripts `db:prepare-migration` and `db:deploy-migration` exist but are not used in this workflow
 
 ## Testing
 
-### Cypress
+### Playwright (E2E Tests)
 
-We use Cypress for our End-to-End tests in this project. You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
+End-to-end tests are in the `test/e2e` directory using Playwright.
 
-We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
-
-To run these tests in development, complete your `.env` and run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
-
-We also have a utility to auto-delete the user at the end of your test. Just make sure to add this in each test file:
-
-```ts
-afterEach(() => {
-	cy.cleanupUser();
-});
+```bash
+npm run test:e2e:dev    # Interactive UI mode
+npm run test:e2e:run    # Headless mode (CI)
 ```
 
-That way, we can keep your test db clean and keep your tests isolated from one another.
+Tests use semantic selectors via `page.getByRole()`, `page.getByTestId()`, etc.
 
-### Vitest
+### Vitest (Unit Tests)
 
-For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
+Unit tests use Vitest and Testing Library:
+
+```bash
+npm test              # Watch mode
+npm run test:cov      # With coverage
+```
 
 ### Type Checking
 
-This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a great in-editor experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
-
-### Linting
-
-This project uses ESLint for linting. That is configured in `.eslintrc.js`.
-
-### Formatting
-
-We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
-
-## Start working with Supabase
-
-You are now ready to go further, congrats!
-
-To extend your Prisma schema and apply changes on your supabase database :
-
--   Make your changes in [./app/database/schema.prisma](./app/database/schema.prisma)
--   Prepare your schema migration
-    ```sh
-    npm run db:prepare-migration
-    ```
--   Check your migration in [./app/database/migrations](./app/database)
--   Apply this migration to production
-
-    ```sh
-    npm run db:deploy-migration
-    ```
-
-## If your token expires in less than 1 hour (3600 seconds in Supabase Dashboard)
-
-If you have a lower token lifetime than me (1 hour), you should take a look at `REFRESH_ACCESS_TOKEN_THRESHOLD` in [./app/modules/auth/session.server.ts](./app/modules/auth/session.server.ts) and set what you think is the best value for your use case.
-
-## Supabase RLS
-
-You may ask "can I use RLS with Remix".
-
-The answer is "Yes" but It has a cost.
-
-Using Supabase SDK server side to query your database (for those using RLS features) adds an extra delay due to calling a Gotrue rest API instead of directly calling the Postgres database (and this is fine because at first Supabase SDK is for those who don't have/want backend).
-
-In my benchmark, it makes my pages twice slower. (~+200ms compared to a direct query with Prisma)
-
-## Supabase login with magic link
-
-In order to make the register/login with magic link work, you will need to add some configuration to your Supabase.
-You need to add the site url as well as the redirect urls of your local, test and live app that will be used for oauth
-To do that navigate to Authentication > URL configiration and add the folowing values:
-
--   https://localhost:3000/oauth/callback
--   https://localhost:3000/reset-password
--   https://staging-domain.com/oauth/callback
--   https://staging-domain.com/reset-password
--   https://live-domain.com/oauth/callback
--   https://live-domain.com/reset-password
-
-## Old project
-
-```shell
-ack 'supa-fly-stack'
+```bash
+npm run typecheck
 ```
+
+### Linting & Formatting
+
+```bash
+npm run lint          # ESLint
+npm run format        # Prettier
+```
+
+## Advanced Configuration
+
+### Token Expiration
+
+If your Supabase JWT expires in less than 1 hour (3600 seconds), adjust `REFRESH_ACCESS_TOKEN_THRESHOLD` in [app/modules/auth/session.server.ts](./app/modules/auth/session.server.ts).
+
+### Row Level Security (RLS)
+
+This stack implements **defense-in-depth security** with both application-layer authorization and database-level RLS policies.
+
+**RLS Policies** ([supabase/migrations/20251126002639_rls.sql](supabase/migrations/20251126002639_rls.sql)):
+
+-   Enabled on all user-facing tables (`User`, `Note`)
+-   Users can only access their own data
+-   Policies enforce user ownership at the database level
+
+**When to use Supabase SDK vs Prisma**:
+
+-   **Use Prisma** (default): For server-side data operations in loaders/actions
+    -   Faster performance (direct PostgreSQL connection)
+    -   Type-safe queries with auto-generated types
+    -   Still protected by RLS policies
+-   **Use Supabase SDK**: For client-side operations or auth-specific functionality
+    -   Client-side data fetching without server interaction
+    -   Real-time subscriptions
+    -   Storage operations (file uploads)
+    -   Auth operations (password reset flows, magic links)
+
+See [app/integrations/supabase/client.ts](./app/integrations/supabase/client.ts) for available Supabase clients (`supabaseClient` for public operations, `getSupabaseAdmin()` for server-side admin operations).
+
+### Local Supabase Development
+
+This project supports the [Supabase CLI](https://supabase.com/docs/guides/cli) for local development:
+
+```bash
+supabase start        # Start local Supabase
+supabase stop         # Stop local Supabase
+```
+
+Local services:
+
+-   Studio UI: http://localhost:54323
+-   Email testing (Inbucket): http://localhost:54324
+
+See `supabase/config.toml` for configuration.
+
+## Project Structure
+
+```
+app/
+├── modules/          # Domain modules (auth, note, user)
+├── routes/           # React Router v7 routes
+├── database/         # Prisma schema and migrations
+├── integrations/     # Third-party integrations (Supabase, i18n)
+├── components/       # Shared React components
+└── styles/           # Global styles
+
+test/
+├── e2e/              # Playwright E2E tests
+├── unit/             # Vitest unit tests
+└── support/          # Test utilities and fixtures
+```
+
+## Need Help?
+
+-   [React Router Documentation](https://reactrouter.com/docs)
+-   [Supabase Documentation](https://supabase.com/docs)
+-   [Prisma Documentation](https://www.prisma.io/docs)
+-   [Vercel Documentation](https://vercel.com/docs)
+
+## License
+
+MIT

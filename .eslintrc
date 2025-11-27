@@ -109,5 +109,10 @@
 			}
 		}
 	],
-	"ignorePatterns": ["coverage/**", "build/**", "node_modules/**", ".react-router/**"]
+	"ignorePatterns": [
+		"coverage/**",
+		"build/**",
+		"node_modules/**",
+		".react-router/**"
+	]
 }

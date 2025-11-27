@@ -349,7 +349,9 @@ test.describe("Data Isolation", () => {
 
 	test("should not show other users' notes", async ({ page }) => {
 		// Create first user with note (programmatically)
-		const user1Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+		const user1Email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 		const user1Password = faker.internet.password({ length: 12 });
 		const user1Note = {
 			title: faker.lorem.words(3) + " USER1",
@@ -367,7 +369,9 @@ test.describe("Data Isolation", () => {
 		await logoutUser(page);
 
 		// Create second user
-		const user2Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+		const user2Email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 		const user2Password = faker.internet.password({ length: 12 });
 		await createAccount(user2Email, user2Password);
 
@@ -391,7 +395,9 @@ test.describe("Data Isolation", () => {
 		page,
 	}) => {
 		// Create user 1 with a note (programmatically)
-		const user1Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+		const user1Email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 		const user1Password = faker.internet.password({ length: 12 });
 		const noteData = {
 			title: faker.lorem.words(3),
@@ -404,7 +410,9 @@ test.describe("Data Isolation", () => {
 		const noteUrl = `/notes/${note.id}`; // Construct the note URL
 
 		// Create and login as user 2
-		const user2Email = faker.internet.email({ provider: "example.com" }).toLowerCase();
+		const user2Email = faker.internet
+			.email({ provider: "example.com" })
+			.toLowerCase();
 		const user2Password = faker.internet.password({ length: 12 });
 		await createAccount(user2Email, user2Password);
 		await loginUser(page, user2Email, user2Password);

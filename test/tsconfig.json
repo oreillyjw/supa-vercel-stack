@@ -1,10 +1,6 @@
 {
 	"exclude": ["../node_modules/@types/jest"],
-	"include": [
-		"e2e/**/*",
-		"support/**/*",
-		"../node_modules/@playwright/test"
-	],
+	"include": ["e2e/**/*", "support/**/*", "../node_modules/@playwright/test"],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"noEmit": true,

@@ -34,7 +34,8 @@ export async function createNote(
 
 		return note;
 	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
+		const errorMessage =
+			error instanceof Error ? error.message : String(error);
 		throw new Error(
 			`Failed to create test note for user ${userId}: ${errorMessage}`,
 		);

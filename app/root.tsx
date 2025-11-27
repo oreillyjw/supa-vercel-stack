@@ -1,6 +1,13 @@
 import { useTranslation } from "react-i18next";
 import type { LinksFunction, LoaderFunction, MetaFunction } from "react-router";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
+import {
+	Links,
+	Meta,
+	Outlet,
+	Scripts,
+	ScrollRestoration,
+	useLoaderData,
+} from "react-router";
 import { useChangeLanguage } from "remix-i18next/react";
 
 import { i18nextServer } from "~/integrations/i18n/i18next.server";
@@ -9,7 +16,11 @@ import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 import { getBrowserEnv } from "./utils/env";
 
 export const links: LinksFunction = () => [
-	{ rel: "stylesheet preload prefetch", href: tailwindStylesheetUrl, as: "style" },
+	{
+		rel: "stylesheet preload prefetch",
+		href: tailwindStylesheetUrl,
+		as: "style",
+	},
 ];
 
 export const meta: MetaFunction = () => [

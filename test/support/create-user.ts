@@ -34,7 +34,8 @@ export async function createAccount(email: string, password: string) {
 
 		return { email, password };
 	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
+		const errorMessage =
+			error instanceof Error ? error.message : String(error);
 		throw new Error(
 			`Failed to create test user account for ${email}: ${errorMessage}`,
 		);

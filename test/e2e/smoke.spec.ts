@@ -66,7 +66,9 @@ test.describe("smoke tests", () => {
 		// Create a new note
 		await page.getByRole("link", { name: /\+ new note/i }).click();
 
-		await page.getByRole("textbox", { name: /title/i }).fill(testNote.title);
+		await page
+			.getByRole("textbox", { name: /title/i })
+			.fill(testNote.title);
 		await page.getByRole("textbox", { name: /body/i }).fill(testNote.body);
 		await page.getByRole("button", { name: /save/i }).click();
 

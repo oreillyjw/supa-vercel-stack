@@ -25,11 +25,7 @@ export function ContinueWithEmailForm() {
 	}, [isSuccessFull]);
 
 	return (
-		<sendMagicLink.Form
-			method="post"
-			action="/send-magic-link"
-			ref={ref}
-		>
+		<sendMagicLink.Form method="post" action="/send-magic-link" ref={ref}>
 			<input
 				type="email"
 				name="email"
