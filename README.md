@@ -60,15 +60,15 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-react-ro
 -   Copy `.env.example` to `.env` and add your Supabase credentials:
 
 ```env
-DATABASE_URL="postgres://postgres:{YOUR_PASSWORD}@db.{YOUR_INSTANCE_NAME}.supabase.co:5432/postgres"
+POSTGRES_PRISMA_URL="postgres://postgres:{YOUR_PASSWORD}@db.{YOUR_INSTANCE_NAME}.supabase.co:5432/postgres"
 SUPABASE_URL="https://{YOUR_INSTANCE_NAME}.supabase.co"
 SUPABASE_ANON_KEY="{ANON_PUBLIC}"
 SUPABASE_SERVICE_ROLE_KEY="{SERVICE_ROLE}"
-SUPABASE_JWT_SECRET="super-duper-s3cret"
+SUPABASE_JWT_SECRET="{JWT_SECRET}"
 SERVER_URL="http://localhost:3000"
 ```
 
-> **Note:** Generate a secure `SUPABASE_JWT_SECRET` using `openssl rand -hex 32` or a password generator
+> **Note:** For local development, use `POSTGRES_PRISMA_URL` and `SERVER_URL`. On Vercel, `POSTGRES_PRISMA_URL` is provided by Supabase Integration and `VERCEL_URL` is automatically provided. Find your `SUPABASE_JWT_SECRET` in Supabase Dashboard → Project Settings → API → JWT Settings → JWT Secret
 
 -   Initial setup (installs dependencies and sets up database):
 
@@ -128,28 +128,29 @@ Go to Authentication → URL Configuration and add:
     The easiest way to connect Supabase to Vercel:
 
     - Install the [Supabase Integration](https://vercel.com/marketplace/supabase) from Vercel Marketplace
-    - This automatically configures `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`
-    - You only need to manually add:
-        ```
-        DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
-        SUPABASE_JWT_SECRET={GENERATE_WITH_openssl_rand_-hex_32}
-        SERVER_URL=https://your-app.vercel.app
-        ```
+    - This automatically configures all required environment variables:
+
+        - `SUPABASE_URL`
+        - `SUPABASE_ANON_KEY`
+        - `SUPABASE_SERVICE_ROLE_KEY`
+        - `POSTGRES_PRISMA_URL` (used by Prisma)
+        - `SUPABASE_JWT_SECRET`
+
+        > No additional manual configuration needed! Vercel automatically provides `VERCEL_URL` for OAuth callbacks.
 
     **Option B: Manual Configuration**
 
     Alternatively, add all environment variables manually in Vercel project settings:
 
     ```
-    DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
+    POSTGRES_PRISMA_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
     SUPABASE_URL=https://{YOUR_INSTANCE_NAME}.supabase.co
     SUPABASE_ANON_KEY={ANON_PUBLIC_KEY}
     SUPABASE_SERVICE_ROLE_KEY={SERVICE_ROLE_KEY}
-    SUPABASE_JWT_SECRET={GENERATE_WITH_openssl_rand_-hex_32}
-    SERVER_URL=https://your-app.vercel.app
+    SUPABASE_JWT_SECRET={YOUR_SUPABASE_JWT_SECRET}
     ```
 
-    > **Important:** Set `SERVER_URL` to your actual Vercel deployment URL (e.g., `https://your-app.vercel.app`)
+    > **Note:** Find `SUPABASE_JWT_SECRET` in Supabase Dashboard → Project Settings → API → JWT Settings. Prisma uses `POSTGRES_PRISMA_URL` for database connections.
 
 4. **Deploy**
 
@@ -222,9 +223,15 @@ To make changes to your database schema:
 
 1. **Create a new Supabase migration**:
 
-    ```sh
-    supabase migration new your_migration_name
-    ```
+```sh
+supabase migration new your_migration_name
+```
+
+OR
+
+```sh
+npx supabase migration new your_migration_name
+```
 
 2. **Write your SQL migration** in the generated file at `supabase/migrations/TIMESTAMP_your_migration_name.sql`
 
@@ -241,11 +248,7 @@ To make changes to your database schema:
     - Runs `prisma generate` to update the Prisma client
     - Seeds the database with test data
 
-4. **For production**, push migrations to your Supabase project:
-
-    ```sh
-    supabase db push
-    ```
+4. **For production**, database change are applied during CI/CD
 
 ### Important Notes
 

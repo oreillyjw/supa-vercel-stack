@@ -181,11 +181,11 @@ React Router v7 file-based routing in `app/routes/`:
 
 Required environment variables (see `.env.example`):
 
--   `DATABASE_URL`: PostgreSQL connection string
+-   `POSTGRES_PRISMA_URL`: PostgreSQL connection string for Prisma
 -   `SUPABASE_URL`: Your Supabase project URL
 -   `SUPABASE_ANON_KEY`: Anonymous public key
 -   `SUPABASE_SERVICE_ROLE_KEY`: Service role key (server-side only)
--   `SUPABASE_JWT_SECRET`: Random secret for session encryption (same as Supabase JWT secret)
+-   `SUPABASE_JWT_SECRET`: JWT secret from Supabase (found in Dashboard → Project Settings → API → JWT Settings)
 -   `SERVER_URL`: Your app's URL (for email callbacks) - optional on Vercel (uses VERCEL_URL)
 
 **Token Lifetime Note**: Default JWT expiry is 3600s (1 hour). If your Supabase project uses shorter token lifetimes, adjust `REFRESH_ACCESS_TOKEN_THRESHOLD` in [app/modules/auth/session.server.ts:19](app/modules/auth/session.server.ts#L19).
@@ -263,30 +263,30 @@ This stack is optimized for [Vercel](https://vercel.com) deployment with zero co
 
 **Environment Variables for Vercel**:
 
-**Recommended: Use the Supabase Integration** from Vercel Marketplace which automatically configures `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`.
+**Recommended: Use the Supabase Integration** from Vercel Marketplace which automatically configures all required environment variables:
 
-Then manually add these in Vercel project settings (Settings → Environment Variables):
+-   `SUPABASE_URL`
+-   `SUPABASE_ANON_KEY`
+-   `SUPABASE_SERVICE_ROLE_KEY`
+-   `POSTGRES_PRISMA_URL` (used by Prisma)
+-   `SUPABASE_JWT_SECRET`
 
-```
-DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
-SUPABASE_JWT_SECRET={GENERATE_RANDOM_SECRET}
-SERVER_URL=https://your-app.vercel.app
-```
+> No additional manual configuration needed! Vercel automatically provides `VERCEL_URL` for OAuth callbacks.
 
 Or manually configure all variables:
 
 ```
-DATABASE_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
+POSTGRES_PRISMA_URL=postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres
 SUPABASE_URL=https://{YOUR_INSTANCE_NAME}.supabase.co
 SUPABASE_ANON_KEY={ANON_PUBLIC_KEY}
 SUPABASE_SERVICE_ROLE_KEY={SERVICE_ROLE_KEY}
-SUPABASE_JWT_SECRET={GENERATE_RANDOM_SECRET}
-SERVER_URL=https://your-app.vercel.app
+SUPABASE_JWT_SECRET={YOUR_SUPABASE_JWT_SECRET}
 ```
+
+> Find `SUPABASE_JWT_SECRET` in Supabase Dashboard → Project Settings → API → JWT Settings. Prisma uses `POSTGRES_PRISMA_URL` for database connections.
 
 **Important Notes**:
 
--   `SERVER_URL` must be set to your Vercel deployment URL (not localhost)
 -   Update Supabase Authentication → URL Configuration with your Vercel URLs:
     -   `https://your-app.vercel.app/oauth/callback`
     -   `https://your-app.vercel.app/reset-password`

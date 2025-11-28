@@ -60,24 +60,26 @@ vercel link
 The easiest way to configure environment variables:
 
 1. Install the [Supabase Integration](https://vercel.com/marketplace/supabase) from Vercel Marketplace
-2. This automatically configures: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-3. Manually add remaining variables in Vercel project settings:
-    - `DATABASE_URL` - `postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres`
-    - `SUPABASE_JWT_SECRET` - Generate with `openssl rand -hex 32`
-    - `SERVER_URL` - Your production app URL (e.g., `https://your-app.vercel.app`)
+2. This automatically configures all required environment variables:
+    - `SUPABASE_URL`
+    - `SUPABASE_ANON_KEY`
+    - `SUPABASE_SERVICE_ROLE_KEY`
+    - `POSTGRES_PRISMA_URL` (used by Prisma)
+    - `SUPABASE_JWT_SECRET`
+
+> **Note:** No additional manual configuration needed! Vercel also automatically provides `VERCEL_URL` which is used for OAuth callbacks and password resets.
 
 **Option B: Manual Configuration**
 
 Alternatively, add all environment variables manually in Vercel project dashboard:
 
--   `DATABASE_URL` - Production Supabase database connection string
+-   `POSTGRES_PRISMA_URL` - Production Supabase database connection string (`postgres://postgres:{PASSWORD}@db.{INSTANCE}.supabase.co:5432/postgres`)
 -   `SUPABASE_URL` - Production Supabase project URL
 -   `SUPABASE_SERVICE_ROLE_KEY` - Production Supabase service role key
 -   `SUPABASE_ANON_KEY` - Production Supabase anonymous key
--   `SUPABASE_JWT_SECRET` - JWT secret for session encryption (generate with `openssl rand -hex 32`)
--   `SERVER_URL` - Your production app URL (e.g., `https://your-app.vercel.app`)
+-   `SUPABASE_JWT_SECRET` - Found in Supabase Dashboard → Project Settings → API → JWT Settings → JWT Secret
 
-> **Note:** Vercel automatically provides `VERCEL_URL` which is used if `SERVER_URL` is not set. However, it's recommended to set `SERVER_URL` explicitly for production.
+> **Note:** Vercel automatically provides `VERCEL_URL` which is used for OAuth callbacks and password resets.
 
 ## Deployment Flow
 
