@@ -1,6 +1,6 @@
 # React Router v7 Supa Vercel Stack
 
-![React Router v7 Supa Vercel Stack](https://github.com/oreillyjw/supa-vercel-stack/blob/main/public/built-site-image.jpeg?raw=true)
+![React Router v7 Supa Vercel Stack](https://raw.githubusercontent.com/oreillyjw/supa-vercel-stack/refs/heads/main/public/built-site-image.png)
 
 A modern full-stack starter template built with React Router v7, Supabase, and Vercel.
 
